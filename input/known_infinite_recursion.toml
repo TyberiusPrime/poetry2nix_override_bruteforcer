@@ -1,0 +1,21 @@
+infinite = [
+  "adafruit-blinka",
+  "bluewhale3",
+  "dictobject", #luckydonald-utils -> dictobject
+  "pennylane", #"<->pennylane-lightning
+  "flaskbb", #<->flaskbb-plugin-conversations-1.0.2:
+  "products-meetingcommunes",
+  "products-atvocabularymanager",
+  "products-cron4plone",
+  "products-ploneboard",
+  "products-redirectiontool",
+  "products-ploneformgen",
+  "adafruit-extended-bus",
+  "adafruit-circuitpython-ble",
+  "apache-airflow-providers-odbc", 
+  "apache-airflow-providers-airbyte",
+  "apache-airflow-providers-mysql",
+  "apache-airflow-providers-microsoft-mssql",
+  "product-silvametadata",
+
+]

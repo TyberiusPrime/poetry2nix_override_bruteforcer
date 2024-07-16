@@ -1,0 +1,3 @@
+{
+  buildInputs = [pkgs.srtp.dev];
+}

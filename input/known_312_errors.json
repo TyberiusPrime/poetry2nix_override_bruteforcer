@@ -1,0 +1,13 @@
+[
+	"python-ldap",
+	"orange3",
+	"opennmt-py",
+	"gpy",
+	"openfisca-core",
+	"pybx",
+	"thinc",
+	"simpleparse",
+	"abjad",
+	"mycapytain",
+	"cmreshandler"
+]

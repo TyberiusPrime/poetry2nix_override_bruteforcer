@@ -1,0 +1,6 @@
+{
+  buildInputs = [
+    igraph-c
+    libleidenalg
+  ];
+}

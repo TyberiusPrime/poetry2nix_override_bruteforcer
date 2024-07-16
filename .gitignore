@@ -1,0 +1,5 @@
+output/
+__pycache__/
+*/__pycache__/
+input/pypi_info
+.ppg/
