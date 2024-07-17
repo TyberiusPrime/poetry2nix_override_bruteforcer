@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on hahomematic (2024.6.0) which requires Python >=3.12.0, version solving failed.

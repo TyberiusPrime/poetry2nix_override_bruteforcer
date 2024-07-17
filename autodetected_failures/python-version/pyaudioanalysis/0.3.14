@@ -1,0 +1,2 @@
+python_version
+Because pyaudioanalysis (0.3.14) depends on scipy (1.6.3) which requires Python >=3.7,<3.10, pyaudioanalysis is forbidden.

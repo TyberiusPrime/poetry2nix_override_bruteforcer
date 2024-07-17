@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on zwave-js-server-python (0.57.0) which requires Python >=3.12, version solving failed.

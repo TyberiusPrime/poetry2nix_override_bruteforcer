@@ -7,12 +7,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pypipegraph2 = {git = "https://github.com/TyberiusPrime/pypipegraph2"}
+#pypipegraph2 = {git = "https://github.com/TyberiusPrime/pypipegraph2"}
+pypipegraph2 = "3.0.9"
 poetry = "^1.8.3"
 psutil = "^6.0.0"
 packaging = "^24.1"
 setuptools = "^70.3.0"
 toml = "^0.10.2"
+pyzstd = "^0.16.0"
 
 
 [build-system]

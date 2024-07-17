@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on pyfony-core (0.7.0) which requires Python >=3.7.3,<3.8.0, version solving failed.

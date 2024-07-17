@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on fastlid (0.1.12) which requires Python <3.10,>=3.8, version solving failed.

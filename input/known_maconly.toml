@@ -1,3 +1,4 @@
 maconly = [
-	"macfsevents"
+	"macfsevents",
+	"pyobjc-core"
 ]

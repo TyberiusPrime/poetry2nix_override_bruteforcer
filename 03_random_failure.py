@@ -3,10 +3,14 @@ from pathlib import Path
 import subprocess
 import random
 
+import shared
+
 fails = []
 
 for dir in Path("output").glob("*"):
     if dir.is_dir():
+        if dir.name in shared.known_failing:
+            continue
         for subdir in dir.glob("*"):
             if subdir.is_dir():
                 if (subdir / "result").exists():

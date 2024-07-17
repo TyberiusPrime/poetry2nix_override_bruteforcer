@@ -181,4 +181,4 @@
 "xclim"= """pyarrow="16.0"\n"""
 "qscintilla"= """pyqt5-qt5 = "=5.15.2"\n"""
 "genice" = """numpy="<2"\n"""
-
+"bob-measure" = """numba="<0.60"\n"""

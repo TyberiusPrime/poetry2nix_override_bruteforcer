@@ -8,6 +8,7 @@
 	"thinc",
 	"simpleparse",
 	"abjad",
+	"markdown-macros",
 	"mycapytain",
 	"cmreshandler"
 ]

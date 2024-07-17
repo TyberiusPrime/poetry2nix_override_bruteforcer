@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on futures (3.4.0) which requires Python >=2.6, <3, version solving failed.

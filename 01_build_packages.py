@@ -16,7 +16,7 @@ from pathlib import Path
 from shared import known_failing
 import os
 
-ppg.new()
+ppg.new(cores=6)
 
 variations = [
     "with_patch",
@@ -45,7 +45,7 @@ entries = [
     ("python-ldap", "3.4.4"),
 ]
 
-entries.extend(json.loads(Path("input.json").read_text())[: 1280 * 4])
+entries.extend(json.loads(Path("input.json").read_text())[:])
 
 
 def normalise_package_name(name):
@@ -61,6 +61,11 @@ blacklist = []
 
 add_constraints = toml.loads(Path("input/constraints.toml").read_text())
 
+gast_downgrades = set()
+for fn in Path("autodetected_failures/gast_0.5").glob("**/*"):
+    if fn.is_file():
+        gast_downgrades.add(fn.parent.name, fn.name)
+
 
 def write_template(pkg, version, constraints):
     def inner(output_files):
@@ -69,6 +74,8 @@ def write_template(pkg, version, constraints):
         here = f'"{pkg}"="{version}"'
         if constraints:
             here += "\n" + constraints
+        if (pkg, version) in gast_downgrades:
+            here += """gast="<0.6.0"\n"""
         (top / "pyproject.toml").write_text(
             templates["pyproject.toml"].replace("#here", here)
         )
@@ -105,13 +112,28 @@ def poetry_lock(pkg, version):
                 timeout=60,
                 stdout=open(files["status"].with_suffix(".stdout"), "w"),
                 stderr=open(files["status"].with_suffix(".stderr"), "w"),
+                check=False,
             )
         except subprocess.TimeoutExpired:
             files["status"].write_text("timeout")
             return
+        except:
+            raise
         if not p.returncode == 0:
             files["status"].write_text("failure")
-            pass
+            stderr = files["status"].with_suffix(".stderr").read_text()
+            line = None
+            if "which requires Python":
+                line = [x for x in stderr.split("\n") if "which requires Python" in x]
+            elif "Invalid python versions" in stderr:
+                line = [x for x in stderr.split("\n") if "Invalid python versions" in x]
+
+            if line:
+                op = Path("autodetected_failures/python-version") / pkg / version
+                op.parent.mkdir(exist_ok=True, parents=True)
+                op.write_text("python-version\n" + "\n".join(line))
+                raise ValueError("python-version")
+
         else:
             files["status"].write_text("OK")
 
@@ -132,7 +154,7 @@ def try_nix_build(path, prefix):
             "--no-allow-import-from-derivation",
             "--keep-going",
             "--cores",
-            "0",
+            "6",
         ],
         cwd=path,
         stdout=open(path / (prefix + ".stdout"), "wb"),
@@ -143,6 +165,10 @@ def try_nix_build(path, prefix):
         stderr = Path(path / (prefix + ".stderr")).read_text()
         if "error: infinite recursion encountered" in stderr:
             failed_derivations = [":::infinite-recursion"]
+        elif "multiple exception types must be parenthesized" in stderr:
+            failed_derivations = [":::python2-only"]
+        elif "distribute-0.7.3.drv' failed" in stderr:
+            failed_derivations = [":::no-312"]
         else:
             failed_derivations = re.findall(
                 "error: builder for '([^']+)' failed", stderr
@@ -180,27 +206,7 @@ def format_overrides(overrides):
     return raw.replace("#here", text)
 
 
-def pkg_from_derivation_name(derivation):
-    if "spinnmachine-" in derivation:
-        return "spinnmachine"
-    elif "spinnutilities-" in derivation:
-        return "spinnutilities"
-    elif "spinnstoragehandlers-" in derivation:
-        return "spinnstoragehandlers"
-    derivation = derivation.replace("/nix/store/", "")
-    hash_len = 33
-    derivation = derivation[hash_len:]
-    if "/" in derivation:
-        derivation = derivation.split("/", 1)[0]
-    if re.match("python\\d\\.\\d+-", derivation):
-        derivation = derivation.split("-", 1)[1]
-    return derivation.rsplit("-", 1)[0]
-
-
-def pkg_and_version_from_derivation_name(derivation):
-    pkg = pkg_from_derivation_name(derivation)
-    version = derivation.split(pkg)[1][1:].replace(".drv", "")
-    return (pkg, version)
+from shared import pkg_and_version_from_derivation_name, pkg_from_derivation_name
 
 
 def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_version):
@@ -209,7 +215,7 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
     if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
         overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
 
-    if "env" in full and "collision" in full:
+    if "collision between" in full:
         hits = re.findall("error: collision between `([^']+)' and `([^']+)'", full)
         pkg1 = pkg_from_derivation_name(hits[0][0])
         overrides[pkg1].append("{meta.priority = 1;}")
@@ -224,23 +230,28 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "Setuptools not found/distribute setup failed;": "setuptools",
         "Can not execute `setup.py` since setuptools": "setuptools",
         "ModuleNotFoundError: No module named 'pkg_resources": "setuptools",
+        "Can not execute `setup.py` since setuptools is not available": "setuptools",
         # "ModuleNotFoundError: No module named 'distutils'": "setuptools",
         "ModuleNotFoundError: No module named 'poetry'": "poetry-core",
         "ModuleNotFoundError: No module named 'poetry.masonry'": "poetry-core",
         "ModuleNotFoundError: No module named 'poetry_dynamic_versioning'": "poetry-dynamic-versioning",
         "ModuleNotFoundError: No module named 'hatchling'": "hatchling",
         "hatchling.plugin.exceptions.UnknownPluginError: Unknown build hook: vcs": "hatch-vcs",
+        "hatchling.plugin.exceptions.UnknownPluginError: Unknown metadata hook: fancy-pypi-readme": "hatch-fancy-pypi-readme",
         "Unknown metadata hook: requirements_txt": "hatch-requirements-txt",
+        "ModuleNotFoundError: No module named 'flit'": "flit",
         "ModuleNotFoundError: No module named 'flit_core'": "flit-core",
         "ModuleNotFoundError: No module named 'flit_scm'": "flit-scm",
         "No matching distribution found for vcversioner": "vcversioner",
         "No matching distribution found for pytest-runner": "pytest-runner",
         "No matching distribution found for setuptools_git": "setuptools-git",
         "No matching distribution found for setuptools-git-versioning": "setuptools-git-versioning",
+        # "No matching distribution found for setuptools-twine": "setuptools-twine", todo: setuptools-twien
         "No matching distribution found for setuptools-scm": "setuptools-scm",
         "No matching distribution found for setuptools_scm": "setuptools-scm",
         "No matching distribution found for pbr": "pbr",
         "No matching distribution found for pytest": "pytest",
+        "No matching distribution found for grpcio-tools": "grpcio-tools",
         "ModuleNotFoundError: No module named 'expandvars'": "expandvars",
         "ModuleNotFoundError: No module named 'setuptools_rust'": "setuptools-rust",
         # "ModuleNotFoundError: No module named 'wheel'": "wheel",
@@ -267,7 +278,9 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "No matching distribution found for Cython": "cython",
         "No module named 'Cython'": "cython",
         "Could NOT find PkgConfig": "pkgconfig",
+        'prefix of "nanobind" to CMAKE_PREFIX_PATH': "nanobind",
         "Command 'sip-module": "sip",
+        "ModuleNotFoundError: No module named 'extension_helpers'": "astropy-extension-helpers",
     }
 
     for q, vs in queries.items():
@@ -289,27 +302,86 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
               substituteInPlace setup.py \
                 --replace-quiet "use_2to3=True," "" \
                 --replace-quiet "use_2to3=True" "" \
+                --replace-quiet "use_2to3 = True," "" \
+                --replace-quiet "use_2to3= bool(python_version >= 3.0)," "" \
             '';
         }""",
         "error: command 'swig' failed: No such file or directory": """{
             nativeBuildInputs = [ pkgs.swig ];
         }""",
         "mysql_config not found": """{nativeBuildInputs = [pkgs.libmysqlclient];}""",
-        "error: can't find Rust compiler": """{nativeBuildInputs = [ pkgs.rustc pkgs.cargo];}""",
+        "error: can't find Rust compiler": """{nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.rustc pkgs.cargo];}""",
         # this will probably need to be extendend / configured
         "AttributeError: module 'configparser' has no attribute 'SafeConfigParser'.": """{
             postPatch = ''
               substituteInPlace setup.py --replace-quiet "versioneer.get_version()" "'${old.version}'" \\
                 --replace-quiet "cmdclass=versioneer.get_cmdclass()," "" \\
+                --replace-quiet "cmdclass=versioneer.get_cmdclass()" "" \
             '';
           }""",
         "No such file or directory: 'gfortran'": """
         {nativeBuildInputs = [pkgs.gfortran];}
         """,
+        "fatal error: openssl/aes.h: " "No such file or directory: 'gfortran'": """
+            {buildInputs = [pkgs.openssl_3];}
+        """,
+        "ERROR: pkg-config binary 'pkg-config' not found": """
+            {nativeBuildInputs = [pkgs.pkg-config];}
+        """,
+        re.compile("No such file or directory: '[^']*requirements.txt'"): """
+        {
+            postPatch = ''
+                touch requirements.txt
+            '';
+        }
+        "No such file or directory: 'CHANGES.md'":
+        {
+            postPatch = ''
+                touch CHANGE.md
+            '';
+        }
+        """,
+        "No matching distribution found for babel": """
+        {
+                buildInputs = (old.builtInputs or []) ++ [prev.babel];
+        }
+        """,
+        "from distutils.util import byte_compile":  #  a perfectly horrible hack from https://github.com/NixOS/nixpkgs/pull/326321
+        """
+        {
+        nativeBuildInputs =
+          [
+            (prev.setuptools.overrideAttrs {
+              postPatch = ''
+                substituteInPlace setuptools/_distutils/util.py \
+                  --replace-fail \
+                    "from distutils.util import byte_compile" \
+                    "from setuptools._distutils.util import byte_compile"
+              '';
+            })
+          ]
+          ++ (old.nativeBuildInputs
+            or []);
+      });
+        """,
+        # """dist: No such file or directory""":
+        # """
+        # {
+        #   preBuild = ''
+        #         # go to the directory of setup.py
+        #         # it get's lost in cmake.
+        #         cd /build
+        #         SETUP_PATH=`find . -name "setup.py" | sort | head -n 1`
+        #         echo "SETUP_PATH: $SETUP_PATH"
+        #         cd $(dirname $SETUP_PATH)
+        #       '';
+        #   }
+        # """
     }
     for q, v in override_queries.items():
-        if q in full:
-            overrides[pkg].append(v)
+        if (isinstance(q, str) and q in full) or (not isinstance(q, str) and q.search(full)):
+            if not v in overrides[pkg]:
+                overrides[pkg].append(v)
 
     if "ModuleNotFoundError: No module named 'maturin'" in full:
         if not pkg in overrides:
@@ -317,6 +389,15 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             overrides[pkg].append("(standardMaturin {}) old")
             copy_cargo_locks(pkg, version, full, outer_pkg, outer_version, overrides)
             # error: getting status of '/nix/store/057nzl5sq90k3v37zk9cmh1hkplnbwrw-sourcecargo.locks/accelerate/0.32.1.lock': No such file or directory
+
+    if "gast~=0.5.0 not satisfied by version 0.6.0" in full:
+        downgrade_gast(outer_pkg, outer_version)
+
+
+def downgrade_gast(pkg, version):
+    p = Path("autodetected_failures/gast_0.5") / pkg / version
+    p.parent.mkdir(exist_ok=True, parents=True)
+    p.write_text("yes")
 
 
 def extract_cargo_lock_from_derivation(full_log, output_path):
@@ -349,12 +430,13 @@ def copy_cargo_locks(pkg, version, full, outer_pkg, outer_version, overrides):
         input_path_path.write_text(path_inside_derivation)
     path_inside_derivation = input_path_path.read_text()
     if path_inside_derivation.endswith("/Cargo.lock"):
-        path_inside_derivation = path_inside_derivation[:-len('/Cargo.lock')]
-    if path_inside_derivation.startswith(pkg + '-' + version + '/'):
-        path_inside_derivation = path_inside_derivation.split('/',1)[1]
+        path_inside_derivation = path_inside_derivation[: -len("/Cargo.lock")]
+    if path_inside_derivation.startswith(pkg + "-" + version + "/"):
+        path_inside_derivation = path_inside_derivation.split("/", 1)[1]
+    if path_inside_derivation == pkg + "-" + version:
+        path_inside_derivation = False
 
-    if path_inside_derivation != "Cargo.lock":
-
+    if path_inside_derivation and path_inside_derivation != "Cargo.lock":
         overrides[pkg] = [x for x in overrides[pkg] if not "Maturin" in x]
         overrides[pkg].append(
             f"""
@@ -430,12 +512,18 @@ def try_to_build(pkg, version):
                 if ok:
                     break
                 else:
-                    if ":::infinite-recursion" in failed_drv:
-                        (Path("infinite-recursions") / pkg / version).write_text(
-                            "infinite recursion"
-                        )
+                    for k in "infinite-recursion", "python2-only", "no-312":
+                        if ":::" + k in failed_drv:
+                            (Path("autodetected_failures/") / k / pkg).mkdir(
+                                exist_ok=True, parents=True
+                            )
+                            (
+                                Path("autodetected_failures") / k / pkg / version
+                            ).write_text(k)
+                            raise ValueError(k)
+
                     round += 1
-                    if round > 10:
+                    if round > 15:
                         raise ValueError("round10")
                         break
                     err_repeat = False
@@ -451,6 +539,8 @@ def try_to_build(pkg, version):
                             pkg_from_derivation_name(err_repeat) in known_failing,
                         )
                     for drv in failed_drv:
+                        if drv.startswith(":::"):
+                            continue
                         drv_pkg, drv_version = pkg_and_version_from_derivation_name(drv)
                         if (
                             drv_pkg in known_failing
@@ -476,6 +566,7 @@ def try_to_build(pkg, version):
                     "failure: known_failing " + e.args[1]
                 )
             else:
+                raise
                 raise ValueError(pkg, version, e)
 
         if Path(cwd / "result").exists():
@@ -514,6 +605,8 @@ jobs = {}
 for pkg, ver in entries:
     if pkg in known_failing:
         continue
+    if f"{pkg}-{ver}" in known_failing:
+        continue
     if (
         limit is None
         or (limit[1] is None and limit[0] == pkg)
@@ -523,7 +616,11 @@ for pkg, ver in entries:
         if (pkg + "-" + ver) in add_constraints:
             constraints = add_constraints[pkg + "-" + ver]
         constraints = constraints.replace("\\n", "\n")
-        j1 = write_template(pkg, ver, constraints).depends_on(template_jobs.values())
+        j1 = (
+            write_template(pkg, ver, constraints)
+            .depends_on(template_jobs.values())
+            .depends_on_params(gast_downgrades)
+        )
         j2 = poetry_lock(pkg, ver).depends_on(j1)
         # j2 = do_git(pkg).depends_on(j1['flake.nix'])
         j3 = try_to_build(pkg, ver).depends_on(j2).depends_on_func(try_nix_build).self

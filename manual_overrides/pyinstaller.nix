@@ -1,0 +1,3 @@
+{
+  buildInputs = [pkgz.zlib];
+}

@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on arcor2 (1.4.0) which requires Python ==3.11.*, version solving failed.

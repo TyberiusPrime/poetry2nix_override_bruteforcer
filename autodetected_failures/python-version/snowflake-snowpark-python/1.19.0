@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on snowflake-snowpark-python (1.19.0) which requires Python <3.12,>=3.8, version solving failed.

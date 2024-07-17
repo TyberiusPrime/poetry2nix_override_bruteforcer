@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on nautobot (1.6.25) which requires Python <3.12,>=3.8, version solving failed.

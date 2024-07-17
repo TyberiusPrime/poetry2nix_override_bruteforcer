@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on zha (0.0.23) which requires Python >=3.12, version solving failed.

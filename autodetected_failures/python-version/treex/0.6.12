@@ -1,0 +1,2 @@
+python_version
+Because round2 depends on treex (0.6.12) which requires Python >=3.7,<3.11, version solving failed.

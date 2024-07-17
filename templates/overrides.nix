@@ -100,9 +100,10 @@
           ++ [
             pkgs.rustPlatform.cargoSetupHook
             maturinHook
-          ];
+          ] ++ (furtherArgs.nativeBuildInputs or []);
       }
-      // furtherArgs
+      # furtherargs without nativeBuildInputs
+      // lib.attrsets.filterAttrs (name: value: name != "nativeBuildInputs") furtherArgs
     );
 
 in [

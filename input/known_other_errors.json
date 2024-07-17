@@ -29,8 +29,11 @@
   "fuelsdk": "requires suds",
   "openelectrons-i2c": "no files",
   "dawg": "cytohn trouble",
-  "multiprocess": "slow build /preferWheel does not work",
   "pandas-0.25.3": "Not 3.11 compatible",
+  "pandas-0.20.3": "Not modern setuptools compatible",
+  "cf-units": "Needs uduunits2, not in nixpkg",
   "scikit-learn-0.24.2": "Not 3.12 compatible",
-  "pyqt5": "slow build /preferWheel does not work"
+  "pyqt5": "slow build /preferWheel does not work",
+  "eke-study": " eke-study (1.1.18) depends on eke.knowledge (*) which doesn't match any versions,",
+  "dorianutils": "requires cryptography=2.8, which requires openssl-1.1.1w which is insecure"
 }
