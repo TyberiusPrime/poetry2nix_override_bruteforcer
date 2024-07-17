@@ -896,27 +896,31 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pypipegraph2"
-version = "3.0.9"
+version = "3.1.4"
 description = "Advanced python 'what changed and what do we need to do' tracking"
 optional = false
 python-versions = ">=3.7"
-files = [
-    {file = "pypipegraph2-3.0.9-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2b140a807db8115b5e38b844b180b264dd0306972006122c4897f11932e1e275"},
-]
+files = []
+develop = false
 
 [package.dependencies]
 deepdiff = "*"
 filelock = "*"
 loguru = "*"
 networkx = "*"
-psutil = "*"
+pyzstd = "*"
 rich = "*"
 wrapt = "*"
 xxhash = "*"
 
 [package.extras]
-dev = ["black", "flake8", "pre-commit", "pytest", "pytest-cov"]
-test = ["flake8", "pytest", "pytest-cov"]
+testing = ["cython", "dppd_plotnine", "flake8", "pandas", "pypipegraph", "pytest", "pytest-cov", "pytest-mock"]
+
+[package.source]
+type = "git"
+url = "https://github.com/TyberiusPrime/pypipegraph2"
+reference = "HEAD"
+resolved_reference = "e78fde84c34def449f88f0f9c369aee54a41e0c5"
 
 [[package]]
 name = "pyproject-hooks"
@@ -1608,4 +1612,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "9a69e192a5e94bd1f02877d67c2fb455e680a3c2284383178c37dc1191d8171c"
+content-hash = "cd436b58b2fefb524f545e659f24d0e7ecf9c37fdc722489f866400e9bc55998"

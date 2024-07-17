@@ -17,6 +17,7 @@ entries = [
 
 entries.extend(json.loads(Path("input.json").read_text())[:])
 
+
 def normalise_package_name(name):
     parts = re.split("[_.-]+", name.lower())
     parts = [x for x in parts if x]
@@ -24,7 +25,6 @@ def normalise_package_name(name):
 
 
 entries = [(normalise_package_name(k), v) for (k, v) in entries]
-
 
 
 known_poetry_errors = set(
@@ -40,9 +40,17 @@ known_maconly = toml.loads(Path("input/known_maconly.toml").read_text())["maconl
 known_other_erros = set(json.loads(Path("input/known_other_errors.json").read_text()))
 
 autodetected = set()
-for k in "infinite-recursions", "python2-only", "python-version", "no-312":
+for k in [
+    "infinite-recursions",
+    "python2-only",
+    "python-version",
+    "no-312",
+    "openssl-1.1",
+    "rust-nightly",
+    "scikit-build-core version 0.8.2 is too old.",
+]:
     for fn in (Path("autodetected_failures/") / k).glob("**/*"):
-      if fn.is_file():
+        if fn.is_file():
             autodetected.add(fn.parent.name + "-" + fn.name)
 
 known_failing = set()

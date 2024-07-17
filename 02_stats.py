@@ -28,13 +28,16 @@ for pkg, version in entries:
         else:
             count['success:upstream'] += 1
     else:
-        if pkg in known_failing or (pkg + '-' + version) in known_failing:
-            if pkg in autodetected or (pkg + '-' + version) in autodetected:
-                count['fail:expected-autodetected'] += 1
+        if (output_path / "round1.stderr").exists():
+            if pkg in known_failing or (pkg + '-' + version) in known_failing:
+                if pkg in autodetected or (pkg + '-' + version) in autodetected:
+                    count['fail:expected-autodetected'] += 1
+                else:
+                    count['fail:expected-manual'] += 1
             else:
-                count['fail:expected-manual'] += 1
+                count['fail:unexpected'] += 1
         else:
-            count['fail:unexpected'] += 1
+            count['missing:not-done'] += 1
     
 
 for k, v in count.items():

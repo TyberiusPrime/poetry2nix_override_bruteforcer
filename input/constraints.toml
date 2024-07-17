@@ -182,3 +182,5 @@
 "qscintilla"= """pyqt5-qt5 = "=5.15.2"\n"""
 "genice" = """numpy="<2"\n"""
 "bob-measure" = """numba="<0.60"\n"""
+"networkit" = """numpy="<2"\n"""
+"pymatgen"= """numpy="<2"\n"""

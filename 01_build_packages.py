@@ -17,12 +17,7 @@ from shared import known_failing, normalise_package_name
 import shared
 import os
 
-ppg.new(cores=6)
-
-variations = [
-    "with_patch",
-    # "without_patch"
-]
+ppg.new()  # overrides.nixcores=6)
 
 template_jobs = {
     "pyproject.toml": ppg.FileInvariant("templates/pyproject.toml"),
@@ -30,13 +25,13 @@ template_jobs = {
     "flake.lock": ppg.FileInvariant("templates/flake.lock"),
 }
 
-non_template_jobs =  {
+non_template_jobs = {
     "overrides.nix": ppg.FileInvariant("templates/overrides.nix"),
     "build-systems.json": ppg.FileInvariant("templates/build-systems.json"),
-    }
+}
 
-templates = {k: v.files[0].read_text() for k, v in template_jobs.items() }
-non_templates = {k: v.files[0].read_text() for k, v in non_template_jobs.items() }
+templates = {k: v.files[0].read_text() for k, v in template_jobs.items()}
+non_templates = {k: v.files[0].read_text() for k, v in non_template_jobs.items()}
 
 entries = shared.entries[:]
 
@@ -153,6 +148,8 @@ def try_nix_build(path, prefix):
             failed_derivations = [":::python2-only"]
         elif "distribute-0.7.3.drv' failed" in stderr:
             failed_derivations = [":::no-312"]
+        elif "OpenSSL 1.1 is reaching its end" in stderr:
+            failed_derivations = [":::openssl-1.1"]
         else:
             failed_derivations = re.findall(
                 "error: builder for '([^']+)' failed", stderr
@@ -215,13 +212,14 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "Can not execute `setup.py` since setuptools": "setuptools",
         "ModuleNotFoundError: No module named 'pkg_resources": "setuptools",
         "Can not execute `setup.py` since setuptools is not available": "setuptools",
-        # "ModuleNotFoundError: No module named 'distutils'": "setuptools",
+        # "ModuleNotFoundError: No module named 'distutils'": "setuptools", # it's not 100%, but worth a try
         "ModuleNotFoundError: No module named 'poetry'": "poetry-core",
         "ModuleNotFoundError: No module named 'poetry.masonry'": "poetry-core",
         "ModuleNotFoundError: No module named 'poetry_dynamic_versioning'": "poetry-dynamic-versioning",
         "ModuleNotFoundError: No module named 'hatchling'": "hatchling",
         "hatchling.plugin.exceptions.UnknownPluginError: Unknown build hook: vcs": "hatch-vcs",
         "hatchling.plugin.exceptions.UnknownPluginError: Unknown metadata hook: fancy-pypi-readme": "hatch-fancy-pypi-readme",
+        "hatchling.plugin.exceptions.UnknownPluginError: Unknown build hook: jupyter-builder": "hatch-jupyter-builder",
         "Unknown metadata hook: requirements_txt": "hatch-requirements-txt",
         "ModuleNotFoundError: No module named 'flit'": "flit",
         "ModuleNotFoundError: No module named 'flit_core'": "flit-core",
@@ -236,6 +234,7 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "No matching distribution found for pbr": "pbr",
         "No matching distribution found for pytest": "pytest",
         "No matching distribution found for grpcio-tools": "grpcio-tools",
+        "No matching distribution found for pytest-benchmark": "pytest-benchmark",
         "ModuleNotFoundError: No module named 'expandvars'": "expandvars",
         "ModuleNotFoundError: No module named 'setuptools_rust'": "setuptools-rust",
         # "ModuleNotFoundError: No module named 'wheel'": "wheel",
@@ -244,10 +243,12 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "ModuleNotFoundError: No module named 'packaging'": "packaging",
         "ModuleNotFoundError: No module named 'skbuild'": "scikit-build",
         "ModuleNotFoundError: No module named 'pdm'": "pdm-backend",
+        "ModuleNotFoundError: No module named 'pdm.backend'": "pdm-backend",
         "No such file or directory: 'cmake'": "cmake",
         "Cannot find CMake executable.": "cmake",
         "Missing CMake executable": "cmake",
         "Cannot find cmake.": "cmake",
+        "compilation requires cmake.": "cmake",
         "installing from https://github.com/ebiggers/libdeflate.git": [
             "cmake",
             "pkgconfig",
@@ -317,8 +318,8 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             postPatch = ''
                 touch requirements.txt
             '';
-        }
-        "No such file or directory: 'CHANGES.md'":
+        }""",
+        "No such file or directory: 'CHANGES.md'": """
         {
             postPatch = ''
                 touch CHANGE.md
@@ -348,6 +349,12 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             or []);
       });
         """,
+        # "No matching distribution found for pytest-django": """
+        #     {
+        #         nativeBuildInputs = (old.nativeBuildInputs or []) ++ [prev.pytest-django];
+        #         propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ [prev.pytest-django];
+        #     }
+        #     """,
         # """dist: No such file or directory""":
         # """
         # {
@@ -363,19 +370,74 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         # """
     }
     for q, v in override_queries.items():
-        if (isinstance(q, str) and q in full) or (not isinstance(q, str) and q.search(full)):
+        if (isinstance(q, str) and q in full) or (
+            not isinstance(q, str) and q.search(full)
+        ):
             if not v in overrides[pkg]:
                 overrides[pkg].append(v)
 
+    rust = False
     if "ModuleNotFoundError: No module named 'maturin'" in full:
-        if not pkg in overrides:
+        rust = "maturin"
+    elif "ModuleNotFoundError: No module named 'setuptools_rust'" in full:
+        rust = "setuptools_rust"
+
+    if rust:
+        if not any('maturin' in x for x in overrides[pkg]):
             version = pkg_and_version_from_derivation_name(derivation)[1]
-            overrides[pkg].append("(standardMaturin {}) old")
-            copy_cargo_locks(pkg, version, full, outer_pkg, outer_version, overrides)
+            if rust == "setuptools_rust":
+                overrides[pkg].append("((standardMaturin {maturinHook = null;}) old)")
+            else:
+                overrides[pkg].append("((standardMaturin {}) old)")
+            copy_cargo_locks(
+                pkg,
+                version,
+                full,
+                outer_pkg,
+                outer_version,
+                overrides,
+                rust == "setuptools_rust",
+            )
+            if (Path("cargo.locks") / pkg / f"{version}.copy").exists():
+                overrides[pkg][-1] += """ //{
+                        postPatch = let 
+                          cargo_lock = ./. + "/cargo.locks/${old.pname}/${old.version}.lock";
+                        in
+                        (old.postPatch or "") +
+                        ''
+                            echo "copying '${cargo_lock}' to Cargo.lock";
+                            cp ${cargo_lock} Cargo.lock
+                        '';
+                }"""
+
             # error: getting status of '/nix/store/057nzl5sq90k3v37zk9cmh1hkplnbwrw-sourcecargo.locks/accelerate/0.32.1.lock': No such file or directory
 
     if "gast~=0.5.0 not satisfied by version 0.6.0" in full:
         downgrade_gast(outer_pkg, outer_version)
+
+    if "`#![feature]` may not be used on the stable release channel" in full:
+        p = Path("autodetected_failures/rust-nightly") / pkg / version
+        p.parent.mkdir(exist_ok=True, parents=True)
+        p.write_text("yes")
+        raise ValueError("requires rust nightly")
+
+    if "ModuleNotFoundError: No module named 'imp'" in full:
+        p = Path("autodetected_failures/no-312") / pkg / version
+        p.parent.mkdir(exist_ok=True, parents=True)
+        p.write_text("yes")
+        raise ValueError("requires python <3.12, imp module")
+
+    if "SyntaxError" in full and re.findall("raise [^,]+,", full):
+        p = Path("autodetected_failures/python2-only") / pkg / version
+        p.parent.mkdir(exist_ok=True, parents=True)
+        p.write_text("raise something, syntax error")
+        raise ValueError("python2-only")
+
+    if "scikit-build-core version 0.8.2 is too old." in full:
+        p = Path("autodetected_failures/scikit-build-core-too-old") / pkg / version
+        p.parent.mkdir(exist_ok=True, parents=True)
+        p.write_text("0.8.2")
+        raise ValueError("scikit-build-core too old")
 
 
 def downgrade_gast(pkg, version):
@@ -392,6 +454,8 @@ def extract_cargo_lock_from_derivation(full_log, output_path):
         if fn.endswith("Cargo.lock"):
             candidates.append(fn)
     candidates.sort()
+    if not candidates:
+        raise ValueError("No Cargo.lock found")
     fh = tf.extractfile(candidates[0])
     output_path.parent.mkdir(exist_ok=True, parents=True)
     with open(output_path, "wb") as op:
@@ -399,7 +463,9 @@ def extract_cargo_lock_from_derivation(full_log, output_path):
         return candidates[0]
 
 
-def copy_cargo_locks(pkg, version, full, outer_pkg, outer_version, overrides):
+def copy_cargo_locks(
+    pkg, version, full, outer_pkg, outer_version, overrides, setuptools_rust
+):
     input_path = Path("cargo.locks") / pkg / f"{version}.lock"
     input_path_path = Path("cargo.locks") / pkg / f"{version}.path"
     path_inside_derivation = None
@@ -416,22 +482,46 @@ def copy_cargo_locks(pkg, version, full, outer_pkg, outer_version, overrides):
     if path_inside_derivation.endswith("/Cargo.lock"):
         path_inside_derivation = path_inside_derivation[: -len("/Cargo.lock")]
     if path_inside_derivation.startswith(pkg + "-" + version + "/"):
-        path_inside_derivation = path_inside_derivation.split("/", 1)[1]
+        path_inside_derivation = path_inside_derivation[
+            len(pkg + "-" + version + "/") :
+        ]
+    # python package names are funky
+    if normalise_package_name(
+        path_inside_derivation.split("/")[0]
+    ) == normalise_package_name(pkg + "-" + version):
+        path_inside_derivation = "/".join(path_inside_derivation.split("/")[1:])
+
     if path_inside_derivation == pkg + "-" + version:
         path_inside_derivation = False
+    path_inside_derivation = path_inside_derivation.strip()
 
     if path_inside_derivation and path_inside_derivation != "Cargo.lock":
         overrides[pkg] = [x for x in overrides[pkg] if not "Maturin" in x]
-        overrides[pkg].append(
-            f"""
-                standardMaturin {{
-                      furtherArgs = {{
-                        cargoRoot = "{path_inside_derivation}";
-                      }};
-                 }}
-                old
-                """
-        )
+        if setuptools_rust:
+            overrides[pkg].append(
+                f"""
+                    (standardMaturin {{
+                        maturinHook = null;
+                          furtherArgs = {{
+                            cargoRoot = "{path_inside_derivation}";
+                            nativeBuildInputs = [pkgs.cargo pkgs.rustc];
+                          }};
+                     }}
+                    old)
+                    """
+            )
+
+        else:
+            overrides[pkg].append(
+                f"""
+                    (standardMaturin {{
+                          furtherArgs = {{
+                            cargoRoot = "{path_inside_derivation}";
+                          }};
+                     }}
+                    old)
+                    """
+            )
 
     output_path = (
         top_path / outer_pkg / outer_version / "cargo.locks" / pkg / f"{version}.lock"
@@ -450,7 +540,7 @@ def try_to_build(pkg, version):
         if Path(cwd / "result").exists():
             output_files["sentinel"].write_text("skipped")
             return
-        for k,v in non_templates.items():
+        for k, v in non_templates.items():
             (cwd / k).write_text(v)
 
         git_done = cwd / "git.sentinel"
@@ -487,6 +577,7 @@ def try_to_build(pkg, version):
             if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
                 overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
             add_overrides_for_known_packages(pkg, version, overrides)
+            add_build_systems_for_known_packages(pkg, version, build_systems)
 
             while True:
                 override_hash = deepdiff.DeepHash(overrides)[overrides]
@@ -497,6 +588,10 @@ def try_to_build(pkg, version):
                 )
                 ok, failed_drv = try_nix_build(cwd, f"round{round}")
                 if ok:
+                    shutil.copy(cwd / "overrides.nix", cwd / "final.overrides.nix")
+                    shutil.copy(
+                        cwd / "build-systems.json", cwd / "final.build-systems.json"
+                    )
                     break
                 else:
                     for k in "infinite-recursion", "python2-only", "no-312":
@@ -575,6 +670,22 @@ def add_overrides_for_known_packages(pkg, version, overrides):
         if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
             print("bingo", pkg)
             overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
+
+
+def add_build_systems_for_known_packages(pkg, version, build_systems):
+    poetry_lock = toml.loads((top_path / pkg / version / "poetry.lock").read_text())
+    for entry in poetry_lock["package"]:
+        pkg = normalise_package_name(entry["name"])
+        version = entry["version"]
+        if pkg in known_failing or f"{pkg}-{version}" in known_failing:
+            raise ValueError("known failing", pkg)
+        if Path(f"manual_overrides/{pkg}.json").exists():
+            print("bingo build-system", pkg)
+            build_systems[pkg] = json.loads(
+                Path(f"manual_overrides/{pkg}.json").read_text()
+            )
+
+            build_systems[pkg] = sorted(set(build_systems[pkg]))
 
 
 if len(sys.argv) > 2:

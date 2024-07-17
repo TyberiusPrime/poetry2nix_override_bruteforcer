@@ -10,5 +10,6 @@
 	"abjad",
 	"markdown-macros",
 	"mycapytain",
+	"numpy-1.20.3",
 	"cmreshandler"
 ]

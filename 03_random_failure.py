@@ -19,7 +19,8 @@ for dir in Path("output").glob("*"):
                     else:
                         continue
                 else:
-                    fails.append(subdir)
+                    if (subdir / "round1.stderr").exists():
+                        fails.append(subdir)
 
 f = random.choice(fails)
 print(f)

@@ -3,6 +3,7 @@
   pkgs,
   lib,
 }: let
+  sharedLibExt = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
   addBuildSystem' = {
     final,
     drv,
@@ -93,19 +94,23 @@
       {
         cargoDeps = pkgs.rustPlatform.importCargoLock {
           lockFile = ./. + "/cargo.locks/${old.pname}/${old.version}.lock";
-          inherit outputHashes;
         };
         nativeBuildInputs =
           (old.nativeBuildInputs or [])
           ++ [
             pkgs.rustPlatform.cargoSetupHook
             maturinHook
-          ] ++ (furtherArgs.nativeBuildInputs or []);
+          ]
+          ++ (
+            if maturinHook == null
+            then []
+            else []
+          )
+          ++ (furtherArgs.nativeBuildInputs or []);
       }
       # furtherargs without nativeBuildInputs
       // lib.attrsets.filterAttrs (name: value: name != "nativeBuildInputs") furtherArgs
     );
-
 in [
   defaultPoetryOverrides
 

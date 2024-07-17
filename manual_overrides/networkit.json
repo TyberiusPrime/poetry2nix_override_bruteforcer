@@ -1,0 +1,6 @@
+[
+  "setuptools",
+  "cmake",
+  "cython_0",
+  "ninja"
+]

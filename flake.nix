@@ -33,18 +33,18 @@
             polars = prev.polars.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
             pyzstd = prev.pyzstd.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
             #pypipegraph2 = prev.pypipegraph2.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
-            # pypipegraph2 = prev.pypipegraph2.overridePythonAttrs (old: {
-            #   cargoDeps = pkgs.rustPlatform.importCargoLock {
-            #     lockFile = "${prev.pypipegraph2.src}/Cargo.lock";
-            #   };
+            pypipegraph2 = prev.pypipegraph2.overridePythonAttrs (old: {
+              cargoDeps = pkgs.rustPlatform.importCargoLock {
+                lockFile = "${prev.pypipegraph2.src}/Cargo.lock";
+              };
 
-            #   nativeBuildInputs =
-            #     prev.pypipegraph2.nativeBuildInputs
-            #     ++ [
-            #       pkgs.rustPlatform.cargoSetupHook
-            #       pkgs.rustPlatform.maturinBuildHook
-            #     ];
-            # });
+              nativeBuildInputs =
+                prev.pypipegraph2.nativeBuildInputs
+                ++ [
+                  pkgs.rustPlatform.cargoSetupHook
+                  pkgs.rustPlatform.maturinBuildHook
+                ];
+            });
             numpy = prev.numpy.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
           });
           #preferWheels = true;
