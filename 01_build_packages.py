@@ -253,8 +253,11 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             "cmake",
             "pkgconfig",
         ],
+        "Did not find pkg-config by name 'pkg-config'": "pkgconfig",
+        "Did not find CMake 'cmake'": "cmake",
         "No module named 'scikit_build_core'": "scikit-build-core",
         "Could NOT find pybind11": "pybind11",
+        "ModuleNotFoundError: No module named 'whey'": "whey",
         "could not find git for clone of pybind11-populate": "pybind11",
         'CMake was unable to find a build program corresponding to "Ninja".': "ninja",
         "Problem with the CMake installation": "cmake",
@@ -349,6 +352,10 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             or []);
       });
         """,
+        'prefix of "nanobind" to CMAKE_PREFIX_PATH': """{
+                CMAKE_PREFIX_PATH = "${prev.nanobind}/lib/python${lib.versions.majorMinor final.python.version}/site-packages/nanobind/cmake";
+
+        }""",
         # "No matching distribution found for pytest-django": """
         #     {
         #         nativeBuildInputs = (old.nativeBuildInputs or []) ++ [prev.pytest-django];
@@ -383,7 +390,7 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         rust = "setuptools_rust"
 
     if rust:
-        if not any('maturin' in x for x in overrides[pkg]):
+        if not any("maturin" in x for x in overrides[pkg]):
             version = pkg_and_version_from_derivation_name(derivation)[1]
             if rust == "setuptools_rust":
                 overrides[pkg].append("((standardMaturin {maturinHook = null;}) old)")

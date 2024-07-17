@@ -10,37 +10,52 @@ count = collections.Counter()
 
 entries = shared.entries[:]
 
-op = Path('output')
+op = Path("output")
 
 for pkg, version in entries:
     output_path = op / pkg / version
+    what = "???"
     if not output_path.exists():
-        if pkg in known_failing or (pkg + '-' + version) in known_failing:
-            count['missing:expected'] += 1
+        if pkg in known_failing or (pkg + "-" + version) in known_failing:
+            what = "missing:expected"
         else:
-            count["missing:not-done?"] += 1
-        #print(output_path)
-        continue
-    if (output_path / "result").exists():
-        needed_patch = (output_path / "round2.stderr").exists()
-        if needed_patch:
-            count['success:needed_patch'] += 1
-        else:
-            count['success:upstream'] += 1
+            what = "missing:not-done?"
     else:
-        if (output_path / "round1.stderr").exists():
-            if pkg in known_failing or (pkg + '-' + version) in known_failing:
-                if pkg in autodetected or (pkg + '-' + version) in autodetected:
-                    count['fail:expected-autodetected'] += 1
-                else:
-                    count['fail:expected-manual'] += 1
+        if (output_path / "result").exists():
+            needed_patch = (output_path / "round2.stderr").exists()
+            if needed_patch:
+                what = "success:needed_patch"
             else:
-                count['fail:unexpected'] += 1
+                what = "success:upstream"
         else:
-            count['missing:not-done'] += 1
-    
+            if (output_path / "round1.stderr").exists():
+                if pkg in known_failing or (pkg + "-" + version) in known_failing:
+                    if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                        what = "fail:expected-autodetected"
+                    else:
+                        what = "fail:expected-manual"
+                else:
+                    what = "fail:unexpected"
+            else:
+                what = "missing:not-done"
+    count[what] += 1
+    if pkg == "zha":
+        print(pkg, version, what)
+
 
 for k, v in count.items():
     print(k, v)
 
 print("total", sum(count.values()), len(entries))
+print(
+    "% without patch", "%.2f" % (100 * count["success:upstream"] / sum(count.values()))
+)
+print(
+    "% after patch",
+    "%.2f"
+    % (
+        100
+        * (count["success:upstream"] + count["success:needed_patch"])
+        / sum(count.values())
+    ),
+)

@@ -41,6 +41,7 @@
   "yuicompressor": "stub package to prevent dependency configusion against yandex",
   "pyhash": "Todo: c++ failure",
   "cypari": "todo: downloads pari",
+  "gmssl": "not a proper package / 3.8 site-packages dump?",
   "ipycanvas": "todo: loads javascript code with yarn",
   "awsebcli": "File already exists: /nix/store/g03mi720ky987nnn2lp3gl4gsbqia89m-python3.12-awsebcli-3.20.10/bin/eb",
   "palace": "needs libalure",
