@@ -13,7 +13,8 @@ import shutil
 import json
 import subprocess
 from pathlib import Path
-from shared import known_failing
+from shared import known_failing, normalise_package_name
+import shared
 import os
 
 ppg.new(cores=6)
@@ -27,34 +28,17 @@ template_jobs = {
     "pyproject.toml": ppg.FileInvariant("templates/pyproject.toml"),
     "flake.nix": ppg.FileInvariant("templates/flake.nix"),
     "flake.lock": ppg.FileInvariant("templates/flake.lock"),
-    "overrides.nix": ppg.FileInvariant("templates/overrides.nix"),
-    "build-systems.json": ppg.FileInvariant("templates/build-systems.json"),
 }
 
-templates = {k: v.files[0].read_text() for k, v in template_jobs.items()}
+non_template_jobs =  {
+    "overrides.nix": ppg.FileInvariant("templates/overrides.nix"),
+    "build-systems.json": ppg.FileInvariant("templates/build-systems.json"),
+    }
 
-entries = [
-    # ("uuid7", "0.1.0", ""),
-    # ("acquisition-sanitizer", "0.4.1", ""),
-    # ("adafruit-io", "2.7.2", ""),
-    # ("anndata", "0.10.8", ""),
-    # ("allianceauth", "4.1.0", ""),
-    ("2to3", "1.0"),
-    ("zxing-cpp", "2.2.0"),
-    ("django-feed-reader", "1.1.0"),
-    ("python-ldap", "3.4.4"),
-]
+templates = {k: v.files[0].read_text() for k, v in template_jobs.items() }
+non_templates = {k: v.files[0].read_text() for k, v in non_template_jobs.items() }
 
-entries.extend(json.loads(Path("input.json").read_text())[:])
-
-
-def normalise_package_name(name):
-    parts = re.split("[_.-]+", name.lower())
-    parts = [x for x in parts if x]
-    return "-".join(parts)
-
-
-entries = [(normalise_package_name(k), v) for (k, v) in entries]
+entries = shared.entries[:]
 
 top_path = Path("output")
 blacklist = []
@@ -64,7 +48,7 @@ add_constraints = toml.loads(Path("input/constraints.toml").read_text())
 gast_downgrades = set()
 for fn in Path("autodetected_failures/gast_0.5").glob("**/*"):
     if fn.is_file():
-        gast_downgrades.add(fn.parent.name, fn.name)
+        gast_downgrades.add((fn.parent.name, fn.name))
 
 
 def write_template(pkg, version, constraints):
@@ -183,7 +167,7 @@ def format_build_systems(build_systems):
 
 
 def format_overrides(overrides):
-    raw = templates["overrides.nix"]
+    raw = non_templates["overrides.nix"]
     text = ""
     for k, vs in overrides.items():
         for v in vs:
@@ -463,6 +447,12 @@ def try_to_build(pkg, version):
     cwd = top_path / pkg / version
 
     def inner(output_files):
+        if Path(cwd / "result").exists():
+            output_files["sentinel"].write_text("skipped")
+            return
+        for k,v in non_templates.items():
+            (cwd / k).write_text(v)
+
         git_done = cwd / "git.sentinel"
         if not git_done.exists():
             subprocess.check_call(
@@ -487,9 +477,6 @@ def try_to_build(pkg, version):
                 timeout=60,
             )
             git_done.write_text("done")
-        if Path(cwd / "result").exists():
-            output_files["sentinel"].write_text("skipped")
-            return
         round = 1
         seen_before = set()
         overrides = collections.defaultdict(list)
@@ -624,8 +611,9 @@ for pkg, ver in entries:
         j2 = poetry_lock(pkg, ver).depends_on(j1)
         # j2 = do_git(pkg).depends_on(j1['flake.nix'])
         j3 = try_to_build(pkg, ver).depends_on(j2).depends_on_func(try_nix_build).self
+        j2.depends_on(non_template_jobs.values())
         jobs[pkg, ver] = j3
-print(jobs)
+# print(jobs)
 if not jobs:
     print("No jobs matched")
 else:

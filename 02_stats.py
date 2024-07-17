@@ -3,36 +3,41 @@ from pathlib import Path
 import sys
 import shutil
 import collections
-from shared import known_failing
+from shared import known_failing, normalise_package_name, autodetected
+import shared
 
 count = collections.Counter()
 
+entries = shared.entries[:]
 
-count["known_failing"] = len(known_failing)
+op = Path('output')
 
-for dir in Path("output").glob("*"):
-    if dir.is_dir():
-        if dir.name in known_failing:
-            continue
-        for subdir in dir.glob("*"):
-            if subdir.is_dir():
-                if (subdir / "result").exists():
-                    if (subdir / "build-systems.json").stat().st_size == 2 and (
-                        (subdir / "overrides.nix").read_text().count("final: prev") == 1
-                    ):
-                        count["upstream"] += 1
-                    else:
-                        count["patched"] += 1
-                elif (subdir / "outcome").exists() or (
-                    subdir / "round1.stderr"
-                ).exists():
-                    count["fail"] += 1
-                    print(subdir)
-                    if "--nuke" in sys.argv:
-                        shutil.rmtree(dir)
-                else:
-                    count["other"] += 1
+for pkg, version in entries:
+    output_path = op / pkg / version
+    if not output_path.exists():
+        if pkg in known_failing or (pkg + '-' + version) in known_failing:
+            count['missing:expected'] += 1
+        else:
+            count["missing:not-done?"] += 1
+        #print(output_path)
+        continue
+    if (output_path / "result").exists():
+        needed_patch = (output_path / "round2.stderr").exists()
+        if needed_patch:
+            count['success:needed_patch'] += 1
+        else:
+            count['success:upstream'] += 1
+    else:
+        if pkg in known_failing or (pkg + '-' + version) in known_failing:
+            if pkg in autodetected or (pkg + '-' + version) in autodetected:
+                count['fail:expected-autodetected'] += 1
+            else:
+                count['fail:expected-manual'] += 1
+        else:
+            count['fail:unexpected'] += 1
+    
+
 for k, v in count.items():
     print(k, v)
 
-print("total", sum(count.values()))
+print("total", sum(count.values()), len(entries))
