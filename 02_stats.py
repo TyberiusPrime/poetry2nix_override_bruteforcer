@@ -17,9 +17,14 @@ for pkg, version in entries:
     what = "???"
     if not output_path.exists():
         if pkg in known_failing or (pkg + "-" + version) in known_failing:
-            what = "missing:expected"
+            if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                what = "fail:expected-autodetected"
+            else:
+                what = "fail:expected-manual"
+
         else:
             what = "missing:not-done?"
+            print(what, pkg)
     else:
         if (output_path / "result").exists():
             needed_patch = (output_path / "round2.stderr").exists()
@@ -37,18 +42,24 @@ for pkg, version in entries:
                 else:
                     what = "fail:unexpected"
             else:
-                what = "missing:not-done"
+                if pkg in known_failing or (pkg + "-" + version) in known_failing:
+                    if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                        what = "fail:expected-autodetected"
+                    else:
+                        what = "fail:expected-manual"
+                else:
+                    what = "missing:not-done"
     count[what] += 1
-    if pkg == "zha":
-        print(pkg, version, what)
 
 
-for k, v in count.items():
+for k, v in sorted(count.items(), key=lambda x: x[1], reverse=True):
     print(k, v)
 
 print("total", sum(count.values()), len(entries))
+corrected_total = sum(count.values()) - count['missing:not-done'] - count['fail:expected-manual'] - count['fail:expected-autodetected']
+print("corrected total", corrected_total)
 print(
-    "% without patch", "%.2f" % (100 * count["success:upstream"] / sum(count.values()))
+    "% without patch", "%.2f" % (100 * count["success:upstream"] / corrected_total)
 )
 print(
     "% after patch",
@@ -56,6 +67,6 @@ print(
     % (
         100
         * (count["success:upstream"] + count["success:needed_patch"])
-        / sum(count.values())
+        / corrected_total
     ),
 )

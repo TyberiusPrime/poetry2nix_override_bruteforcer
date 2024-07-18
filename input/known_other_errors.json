@@ -45,5 +45,14 @@
   "ipycanvas": "todo: loads javascript code with yarn",
   "awsebcli": "File already exists: /nix/store/g03mi720ky987nnn2lp3gl4gsbqia89m-python3.12-awsebcli-3.20.10/bin/eb",
   "palace": "needs libalure",
+  "ncnn": "todo, cmake error",
+  "thriftpy": "todo?: 3.11 longintrp, cython doesn't fix",
+  "mujoco": "Todo: abseil, it's in nixpkgs, but won't compile for me",
+  "vowpalwabbit": "todo: boost trouble",
+  "ipydatawidgets": "todo: needs yarn",
+  "neurokit": "Wants sklearn, but that's called scikit-learn these days.Patchable?",
+  "xpybutil": "needs xpyb, not in nixpkgs",
+  "batman-package": "c-error?",
   "dorianutils": "requires cryptography=2.8, which requires openssl-1.1.1w which is insecure"
 }
+

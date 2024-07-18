@@ -190,7 +190,9 @@ def format_overrides(overrides):
 from shared import pkg_and_version_from_derivation_name, pkg_from_derivation_name
 
 
-def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_version):
+def guess_overrides(
+    derivation, overrides, build_systems, outer_pkg, outer_version, round
+):
     full = subprocess.check_output(["nix", "log", derivation]).decode("utf-8")
     pkg, version = pkg_and_version_from_derivation_name(derivation)
     if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
@@ -245,6 +247,7 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         "ModuleNotFoundError: No module named 'pdm'": "pdm-backend",
         "ModuleNotFoundError: No module named 'pdm.backend'": "pdm-backend",
         "No such file or directory: 'cmake'": "cmake",
+        "command 'cmake' failed: No such file or directory": "cmake",
         "Cannot find CMake executable.": "cmake",
         "Missing CMake executable": "cmake",
         "Cannot find cmake.": "cmake",
@@ -269,6 +272,8 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
         'prefix of "nanobind" to CMAKE_PREFIX_PATH': "nanobind",
         "Command 'sip-module": "sip",
         "ModuleNotFoundError: No module named 'extension_helpers'": "astropy-extension-helpers",
+        "ModuleNotFoundError: No module named 'jupyter_packaging'": "jupyter-packaging",
+        "is `meson` not installed?": "meson",
     }
 
     for q, vs in queries.items():
@@ -329,6 +334,12 @@ def guess_overrides(derivation, overrides, build_systems, outer_pkg, outer_versi
             '';
         }
         """,
+        "No such file or directory: 'HISTORY.rst'": """
+        {
+            postPatch = ''
+                touch HISTORY.rst
+            '';
+        }""",
         "No matching distribution found for babel": """
         {
                 buildInputs = (old.builtInputs or []) ++ [prev.babel];
@@ -470,11 +481,22 @@ def extract_cargo_lock_from_derivation(full_log, output_path):
         return candidates[0]
 
 
+def format_nix_dictionary(d):
+    res = "{"
+    for k, v in d.items():
+        if re.search("[^a-zA-Z0-9-]", k):
+            k = f'"{k}"'
+        res += f'{k} = "{v}";\n'
+    res += "}"
+    return res
+
+
 def copy_cargo_locks(
     pkg, version, full, outer_pkg, outer_version, overrides, setuptools_rust
 ):
     input_path = Path("cargo.locks") / pkg / f"{version}.lock"
     input_path_path = Path("cargo.locks") / pkg / f"{version}.path"
+    input_path_output_hashes = Path("cargo.locks") / pkg / f"{version}.outputHashes"
     path_inside_derivation = None
     if not input_path.exists():
         path_inside_derivation = extract_cargo_lock_from_derivation(full, input_path)
@@ -485,6 +507,13 @@ def copy_cargo_locks(
                 full, input_path
             )
         input_path_path.write_text(path_inside_derivation)
+
+    if not input_path_output_hashes.exists():
+        input_path_output_hashes.write_text(
+            json.dumps(extract_output_hashes(input_path))
+        )
+    output_hashes = json.loads(input_path_output_hashes.read_text())
+
     path_inside_derivation = input_path_path.read_text()
     if path_inside_derivation.endswith("/Cargo.lock"):
         path_inside_derivation = path_inside_derivation[: -len("/Cargo.lock")]
@@ -502,8 +531,21 @@ def copy_cargo_locks(
         path_inside_derivation = False
     path_inside_derivation = path_inside_derivation.strip()
 
-    if path_inside_derivation and path_inside_derivation != "Cargo.lock":
+    if (
+        path_inside_derivation
+        and path_inside_derivation != "Cargo.lock"
+        or output_hashes
+    ):
         overrides[pkg] = [x for x in overrides[pkg] if not "Maturin" in x]
+        if output_hashes:
+            str_output_hashes = f"""
+                    cargoDeps = (pkgs.rustPlatform.importCargoLock {{
+                        lockFile = ./{str(input_path)};
+                        outputHashes = {format_nix_dictionary(output_hashes)};
+                    }});
+                    """
+        else:
+            str_output_hashes = ""
         if setuptools_rust:
             overrides[pkg].append(
                 f"""
@@ -511,6 +553,7 @@ def copy_cargo_locks(
                         maturinHook = null;
                           furtherArgs = {{
                             cargoRoot = "{path_inside_derivation}";
+                            {str_output_hashes}
                             nativeBuildInputs = [pkgs.cargo pkgs.rustc];
                           }};
                      }}
@@ -524,6 +567,7 @@ def copy_cargo_locks(
                     (standardMaturin {{
                           furtherArgs = {{
                             cargoRoot = "{path_inside_derivation}";
+                            {str_output_hashes}
                           }};
                      }}
                     old)
@@ -538,6 +582,26 @@ def copy_cargo_locks(
     subprocess.check_call(
         ["git", "add", "cargo.locks"], cwd=top_path / outer_pkg / outer_version
     )
+
+
+def extract_output_hashes(cargo_lock):
+    t = toml.loads(cargo_lock.read_text())
+    out = {}
+    for pkg in t["package"]:
+        if pkg.get("source", "").startswith("git+https"):
+            url, tag = pkg["source"].split("?tag=")
+            if "#" in tag:
+                tag = tag[tag.index("#") + 1 :]
+            hash = prefetch_git_hash(url, tag)
+            out[f"{pkg['name']}-{pkg['version']}"] = hash
+    return out
+
+
+def prefetch_git_hash(url, tag):
+    output = subprocess.check_output(["nurl", url, tag]).decode("utf-8").split("\n")
+    hash_line = [x for x in output if "hash = " in x][0]
+    hash = hash_line[hash_line.find('"') + 1 : hash_line.rfind('"')]
+    return hash
 
 
 def try_to_build(pkg, version):
@@ -636,7 +700,9 @@ def try_to_build(pkg, version):
                             or "{drv_pkg}-{drv_version}" in known_failing
                         ):
                             raise ValueError("known_failing", drv_pkg)
-                        guess_overrides(drv, overrides, build_systems, pkg, version)
+                        guess_overrides(
+                            drv, overrides, build_systems, pkg, version, round
+                        )
                         seen_before.add(drv)
                     if (
                         override_hash == deepdiff.DeepHash(overrides)[overrides]
@@ -672,7 +738,7 @@ def add_overrides_for_known_packages(pkg, version, overrides):
     for entry in poetry_lock["package"]:
         pkg = normalise_package_name(entry["name"])
         version = entry["version"]
-        if pkg in known_failing or f"{pkg}-{version}" in known_failing:
+        if pkg in known_failing or f"{pkg}-{version}" in shared.autodetected:
             raise ValueError("known failing", pkg)
         if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
             print("bingo", pkg)
@@ -684,7 +750,7 @@ def add_build_systems_for_known_packages(pkg, version, build_systems):
     for entry in poetry_lock["package"]:
         pkg = normalise_package_name(entry["name"])
         version = entry["version"]
-        if pkg in known_failing or f"{pkg}-{version}" in known_failing:
+        if pkg in known_failing or f"{pkg}-{version}" in shared.autodetected:
             raise ValueError("known failing", pkg)
         if Path(f"manual_overrides/{pkg}.json").exists():
             print("bingo build-system", pkg)

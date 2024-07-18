@@ -17,6 +17,9 @@ entries = [
 
 entries.extend(json.loads(Path("input.json").read_text())[:])
 
+entries = [(k, v) for (k, v) in entries if k != "python-axolotl-curve25519"]
+entries.append(("python-axolotl-curve25519", "0.4.1post2"))
+
 
 def normalise_package_name(name):
     parts = re.split("[_.-]+", name.lower())
