@@ -13,12 +13,13 @@ import shutil
 import json
 import subprocess
 from pathlib import Path
-from shared import known_failing, normalise_package_name
+from shared import get_entries, get_known_failing, normalise_package_name
 import shared
 import os
 
 ppg.new()  # overrides.nixcores=6)
 
+known_failing, autodetected = get_known_failing()
 template_jobs = {
     "pyproject.toml": ppg.FileInvariant("templates/pyproject.toml"),
     "flake.nix": ppg.FileInvariant("templates/flake.nix"),
@@ -33,7 +34,7 @@ non_template_jobs = {
 templates = {k: v.files[0].read_text() for k, v in template_jobs.items()}
 non_templates = {k: v.files[0].read_text() for k, v in non_template_jobs.items()}
 
-entries = shared.entries[:]
+entries = shared.get_entries()
 
 top_path = Path("output")
 blacklist = []
@@ -246,6 +247,7 @@ def guess_overrides(
         "ModuleNotFoundError: No module named 'skbuild'": "scikit-build",
         "ModuleNotFoundError: No module named 'pdm'": "pdm-backend",
         "ModuleNotFoundError: No module named 'pdm.backend'": "pdm-backend",
+        "ModuleNotFoundError: No module named 'pdm.pep517": "pdm-pep517",
         "No such file or directory: 'cmake'": "cmake",
         "command 'cmake' failed: No such file or directory": "cmake",
         "Cannot find CMake executable.": "cmake",
@@ -257,6 +259,7 @@ def guess_overrides(
             "pkgconfig",
         ],
         "Did not find pkg-config by name 'pkg-config'": "pkgconfig",
+        "No matching distribution found for pkgconfig": "pkgconfig",
         "Did not find CMake 'cmake'": "cmake",
         "No module named 'scikit_build_core'": "scikit-build-core",
         "Could NOT find pybind11": "pybind11",
@@ -338,6 +341,12 @@ def guess_overrides(
         {
             postPatch = ''
                 touch HISTORY.rst
+            '';
+        }""",
+        "No such file or directory: 'readme.md'": """
+        {
+            postPatch = ''
+                touch readme.md
             '';
         }""",
         "No matching distribution found for babel": """
@@ -775,7 +784,7 @@ def add_overrides_for_known_packages(pkg, version, overrides):
     for entry in poetry_lock["package"]:
         pkg = normalise_package_name(entry["name"])
         version = entry["version"]
-        if pkg in known_failing or f"{pkg}-{version}" in shared.autodetected:
+        if pkg in known_failing or f"{pkg}-{version}" in autodetected:
             raise ValueError("known failing", pkg)
         if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
             print("bingo", pkg)
@@ -787,7 +796,7 @@ def add_build_systems_for_known_packages(pkg, version, build_systems):
     for entry in poetry_lock["package"]:
         pkg = normalise_package_name(entry["name"])
         version = entry["version"]
-        if pkg in known_failing or f"{pkg}-{version}" in shared.autodetected:
+        if pkg in known_failing or f"{pkg}-{version}" in autodetected:
             raise ValueError("known failing", pkg)
         if Path(f"manual_overrides/{pkg}.json").exists():
             print("bingo build-system", pkg)
@@ -817,7 +826,7 @@ for pkg, ver in entries:
         continue
     if (
         limit is None
-        or (limit[1] is None and limit[0] == pkg)
+        or (limit[1] is None and re.search(limit[0],pkg))
         or (limit[1] == ver and limit[0] == pkg)
     ):
         constraints = add_constraints.get(pkg, "")

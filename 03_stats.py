@@ -6,10 +6,6 @@ from shared import examine_results
 import shared
 
 
-entries = shared.entries[:]
-
-
-
 if __name__ == "__main__":
     count, classified = examine_results()
 
@@ -17,7 +13,7 @@ if __name__ == "__main__":
         print(k, v)
 
     total = sum(count.values())
-    print("total", total, len(entries))
+    print("total", total, len(classified))
     corrected_total = (
         sum(count.values())
         - count["missing:not-done"]

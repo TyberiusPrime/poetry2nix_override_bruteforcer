@@ -85,22 +85,37 @@ list_without_versions = get_entries()
 
 with_versions = add_latest(list_without_versions)
 
-with_versions.update(
+
+# these are packages we noted to have shitfting build-systems / overrides
+# so we do them all to determine the cutover points.
+for fn in Path("autodetected/needs_sweep").glob("*"):
+    if fn.read_text().strip() != "no":
+        info = get_info(fn.name)
+        for k, v in info["releases"].items():
+            v = [x for x in v if not "whl" in x["url"]]  # I want only source releases
+            if not v:
+                continue
+            if (not v[0].get("yanked")) and (("." in k) or k.isnumeric()):
+                if not is_prerelease(k):
+                    with_versions.append((fn.name, k))
+
+with_versions.extend(
     [
         ("scikit-learn", "0.24.2"),
-        ("h5py", "2.10.0"),
+        #("h5py", "2.10.0"),
+        ("cirrocumulus", "1.1.57"),
     ]
 )
 
 
 if __name__ == "__main__":
-    output_path = Path("../input.json")
+    output_path = Path("input.json")
     output = []
     for pkg, version in with_versions:
         output.append((pkg, version))
 
-    output = [(k, v) for (k, v) in output if k != "python-axolotl-curve25519"]
-    output.append(("python-axolotl-curve25519", "0.4.1post2"))
+    # output = [(k, v) for (k, v) in output if k != "python-axolotl-curve25519"]
+    # output.append(("python-axolotl-curve25519", "0.4.1post2"))
     output_path.write_text(json.dumps(output, indent=2))
 
 

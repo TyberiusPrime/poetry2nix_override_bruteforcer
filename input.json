@@ -49,7 +49,7 @@
   ],
   [
     "Adafruit-PlatformDetect",
-    "3.72.0"
+    "3.72.1"
   ],
   [
     "Adafruit-PureIO",
@@ -225,7 +225,7 @@
   ],
   [
     "Cheetah3",
-    "3.2.6"
+    "3.2.6.post1"
   ],
   [
     "CherryPy",
@@ -269,7 +269,7 @@
   ],
   [
     "ConfigSpace",
-    "1.0.0"
+    "1.1.0"
   ],
   [
     "ConfigUpdater",
@@ -301,7 +301,7 @@
   ],
   [
     "CurrencyConverter",
-    "0.17.26"
+    "0.17.27"
   ],
   [
     "Cydra",
@@ -434,6 +434,10 @@
   [
     "FGAme",
     "0.6.5"
+  ],
+  [
+    "Fabric3",
+    "1.14.post1"
   ],
   [
     "Faker",
@@ -1005,7 +1009,7 @@
   ],
   [
     "Logbook",
-    "1.7.0"
+    "1.7.0.post0"
   ],
   [
     "Louie",
@@ -1161,7 +1165,7 @@
   ],
   [
     "OctoBot-Commons",
-    "1.9.49"
+    "1.9.50"
   ],
   [
     "OctoBot-Tentacles-Manager",
@@ -1282,6 +1286,10 @@
   [
     "PhenoGraph",
     "1.5.7"
+  ],
+  [
+    "Pillow-SIMD",
+    "9.0.0.post1"
   ],
   [
     "Pint",
@@ -1869,7 +1877,7 @@
   ],
   [
     "PySoundFile",
-    "0.9.0"
+    "0.9.0.post1"
   ],
   [
     "PyStaticConfiguration",
@@ -2640,10 +2648,6 @@
     "2.1.2"
   ],
   [
-    "adafruit-circuitpython-ble",
-    "10.0.7"
-  ],
-  [
     "adafruit-circuitpython-bme280",
     "2.6.24"
   ],
@@ -2700,12 +2704,12 @@
     "1.10.3"
   ],
   [
-    "adafruit-extended-bus",
-    "1.0.2"
-  ],
-  [
     "adafruit-io",
     "2.7.2"
+  ],
+  [
+    "adafruit-nrfutil",
+    "0.5.3.post16"
   ],
   [
     "adagio",
@@ -2901,7 +2905,7 @@
   ],
   [
     "aggdraw",
-    "1.3.18"
+    "1.3.18.post0"
   ],
   [
     "ago",
@@ -3169,7 +3173,7 @@
   ],
   [
     "aiodogstatsd",
-    "0.16.0"
+    "0.16.0.post0"
   ],
   [
     "aioeafm",
@@ -4301,7 +4305,7 @@
   ],
   [
     "ampel-interface",
-    "0.10.1"
+    "0.10.1.post0"
   ],
   [
     "amplitude-analytics",
@@ -4349,7 +4353,7 @@
   ],
   [
     "analytics-python",
-    "1.4.0"
+    "1.4.post1"
   ],
   [
     "anchor-kr",
@@ -4644,10 +4648,6 @@
     "2.9.0"
   ],
   [
-    "apache-airflow-providers-airbyte",
-    "3.8.1"
-  ],
-  [
     "apache-airflow-providers-amazon",
     "8.25.0"
   ],
@@ -4772,20 +4772,8 @@
     "10.2.0"
   ],
   [
-    "apache-airflow-providers-microsoft-mssql",
-    "3.7.2"
-  ],
-  [
     "apache-airflow-providers-mongo",
     "4.1.2"
-  ],
-  [
-    "apache-airflow-providers-mysql",
-    "5.6.2"
-  ],
-  [
-    "apache-airflow-providers-odbc",
-    "4.6.2"
   ],
   [
     "apache-airflow-providers-openlineage",
@@ -4949,7 +4937,7 @@
   ],
   [
     "apiron",
-    "7.1.0"
+    "7.1.0.post3"
   ],
   [
     "apis-core",
@@ -5104,6 +5092,10 @@
     "3.46.0.1"
   ],
   [
+    "apsw-wheels",
+    "3.36.0.post1"
+  ],
+  [
     "apted",
     "1.0.3"
   ],
@@ -5146,6 +5138,10 @@
   [
     "arc4",
     "0.4.0"
+  ],
+  [
+    "arcade",
+    "1.0.1.post1"
   ],
   [
     "arcam-fmj",
@@ -5645,7 +5641,7 @@
   ],
   [
     "astroML",
-    "1.0.2"
+    "1.0.2.post1"
   ],
   [
     "astroalign",
@@ -7472,6 +7468,10 @@
     "1.0.0"
   ],
   [
+    "azure-schemaregistry-avroserializer",
+    "1.0.0b4.post1"
+  ],
+  [
     "azure-search-documents",
     "11.4.0"
   ],
@@ -7670,6 +7670,10 @@
   [
     "backports.tempfile",
     "1.0"
+  ],
+  [
+    "backports.weakref",
+    "1.0.post1"
   ],
   [
     "backports.zoneinfo",
@@ -8145,7 +8149,7 @@
   ],
   [
     "beniget",
-    "0.4.2"
+    "0.4.2.post1"
   ],
   [
     "bentoml",
@@ -8446,6 +8450,10 @@
   [
     "bip32",
     "3.4"
+  ],
+  [
+    "bip32utils",
+    "0.3.post4"
   ],
   [
     "biplist",
@@ -9537,7 +9545,7 @@
   ],
   [
     "c4m-flexcell",
-    "0.4.2"
+    "0.4.2.post3"
   ],
   [
     "c7n",
@@ -10461,11 +10469,11 @@
   ],
   [
     "chirpstack-api",
-    "4.8.1"
+    "4.8.1.post1"
   ],
   [
     "chirptext",
-    "0.1.2"
+    "0.2a6.post2"
   ],
   [
     "chispa",
@@ -12465,7 +12473,7 @@
   ],
   [
     "covalent",
-    "0.232.0"
+    "0.232.0.post1"
   ],
   [
     "covalent-aws-plugins",
@@ -13069,7 +13077,7 @@
   ],
   [
     "cu2qu",
-    "1.6.7"
+    "1.6.7.post2"
   ],
   [
     "cubicweb",
@@ -13393,7 +13401,7 @@
   ],
   [
     "d2to1",
-    "0.2.12"
+    "0.2.12.post1"
   ],
   [
     "d3m",
@@ -13613,7 +13621,7 @@
   ],
   [
     "daqp",
-    "0.5.1"
+    "0.5.1.post1"
   ],
   [
     "darglint",
@@ -14913,7 +14921,7 @@
   ],
   [
     "dffml",
-    "0.4.0"
+    "0.4.0.post2"
   ],
   [
     "dhooks",
@@ -14952,6 +14960,10 @@
     "0.10"
   ],
   [
+    "dicom",
+    "0.9.9.post1"
+  ],
+  [
     "dicom-numpy",
     "0.6.5"
   ],
@@ -14981,7 +14993,7 @@
   ],
   [
     "dict2css",
-    "0.3.0"
+    "0.3.0.post1"
   ],
   [
     "dict2xml",
@@ -15129,7 +15141,7 @@
   ],
   [
     "dirty-equals",
-    "0.7.1"
+    "0.7.1.post0"
   ],
   [
     "dirtyjson",
@@ -17729,7 +17741,7 @@
   ],
   [
     "donfig",
-    "0.8.1"
+    "0.8.1.post1"
   ],
   [
     "dopamine-rl",
@@ -17825,7 +17837,7 @@
   ],
   [
     "dpt-file",
-    "1.0.3"
+    "1.0.3.post1"
   ],
   [
     "dpt-logging",
@@ -18129,7 +18141,7 @@
   ],
   [
     "dumb-init",
-    "1.2.5"
+    "1.2.5.post1"
   ],
   [
     "dumbyaml",
@@ -19041,7 +19053,7 @@
   ],
   [
     "enforce-typing",
-    "1.0.0"
+    "1.0.0.post1"
   ],
   [
     "enhancements",
@@ -19761,7 +19773,7 @@
   ],
   [
     "ezyrb",
-    "1.3.0"
+    "1.3.0.post2404"
   ],
   [
     "f5-icontrol-rest",
@@ -19901,7 +19913,7 @@
   ],
   [
     "faiss-cpu",
-    "1.8.0"
+    "1.8.0.post1"
   ],
   [
     "fake-factory",
@@ -20365,7 +20377,7 @@
   ],
   [
     "fenics-ufl",
-    "2023.2.0"
+    "2024.1.0.post1"
   ],
   [
     "fernet",
@@ -21413,7 +21425,7 @@
   ],
   [
     "fold-to-ascii",
-    "1.0.1"
+    "1.0.2.post1"
   ],
   [
     "foliant",
@@ -21453,7 +21465,7 @@
   ],
   [
     "fontawesome",
-    "4.6.3"
+    "5.10.1.post1"
   ],
   [
     "fontbakery",
@@ -21848,6 +21860,10 @@
     "1.2.0"
   ],
   [
+    "fullpath",
+    "0.0.post0"
+  ],
+  [
     "funbelts",
     "0.1.86"
   ],
@@ -21993,7 +22009,7 @@
   ],
   [
     "fvcore",
-    "0.1.4"
+    "0.1.5.post20221221"
   ],
   [
     "fx2",
@@ -22981,7 +22997,7 @@
   ],
   [
     "gluoncv",
-    "0.10.5"
+    "0.10.5.post0"
   ],
   [
     "gluonnlp",
@@ -23029,7 +23045,7 @@
   ],
   [
     "gmsh-sdk",
-    "4.5.4-1"
+    "4.6.0.post1"
   ],
   [
     "gmssl",
@@ -24305,7 +24321,7 @@
   ],
   [
     "guppy3",
-    "3.1.3"
+    "3.1.4.post1"
   ],
   [
     "gvar",
@@ -25104,6 +25120,10 @@
     "0.7"
   ],
   [
+    "hsaudiotag3k",
+    "1.1.3.post1"
+  ],
+  [
     "hsh",
     "1.1.0"
   ],
@@ -25661,7 +25681,7 @@
   ],
   [
     "ibapi",
-    "9.81.1"
+    "9.81.1.post1"
   ],
   [
     "ibeacon-ble",
@@ -26089,7 +26109,7 @@
   ],
   [
     "import-expression",
-    "2.1.0"
+    "2.1.0.post1"
   ],
   [
     "import-ipynb",
@@ -26673,7 +26693,7 @@
   ],
   [
     "invenio-records-files",
-    "1.2.1"
+    "1.0.0a11.post1"
   ],
   [
     "invenio-records-permissions",
@@ -27917,7 +27937,7 @@
   ],
   [
     "jsonfield2",
-    "4.0.0"
+    "4.0.0.post0"
   ],
   [
     "jsonformatter",
@@ -28349,7 +28369,7 @@
   ],
   [
     "k-diffusion",
-    "0.1.1"
+    "0.1.1.post1"
   ],
   [
     "k-means-constrained",
@@ -28945,7 +28965,7 @@
   ],
   [
     "kubernetes-stubs",
-    "22.6.0"
+    "22.6.0.post1"
   ],
   [
     "kubernetes-validate",
@@ -29181,7 +29201,7 @@
   ],
   [
     "lapx",
-    "0.5.9"
+    "0.5.9.post1"
   ],
   [
     "large-image",
@@ -29225,7 +29245,7 @@
   ],
   [
     "latexify-py",
-    "0.4.2"
+    "0.4.3.post1"
   ],
   [
     "launchable",
@@ -29577,7 +29597,7 @@
   ],
   [
     "libkeepass",
-    "0.3.1"
+    "0.3.1.post1"
   ],
   [
     "libknot",
@@ -29645,7 +29665,7 @@
   ],
   [
     "librosa",
-    "0.10.2"
+    "0.10.2.post1"
   ],
   [
     "librouteros",
@@ -30501,7 +30521,7 @@
   ],
   [
     "logtool",
-    "0.2.25"
+    "0.3.post17"
   ],
   [
     "loguru",
@@ -30673,7 +30693,7 @@
   ],
   [
     "lunr",
-    "0.7.0"
+    "0.7.0.post1"
   ],
   [
     "lupa",
@@ -30761,7 +30781,7 @@
   ],
   [
     "m2r2",
-    "0.3.2"
+    "0.3.3.post2"
   ],
   [
     "m3-builder",
@@ -31193,7 +31213,7 @@
   ],
   [
     "marshmallow-union",
-    "0.1.15"
+    "0.1.15.post1"
   ],
   [
     "marshmallow-utils",
@@ -31205,7 +31225,7 @@
   ],
   [
     "martian",
-    "1.5"
+    "2.0.post1"
   ],
   [
     "martor",
@@ -31937,7 +31957,7 @@
   ],
   [
     "micropython-binascii",
-    "2.4.0-4"
+    "2.4.0.post5"
   ],
   [
     "micropython-cpython-micropython",
@@ -33313,7 +33333,7 @@
   ],
   [
     "msrestazure",
-    "0.6.4"
+    "0.6.4.post1"
   ],
   [
     "mss",
@@ -33397,7 +33417,7 @@
   ],
   [
     "multiformats",
-    "0.3.1"
+    "0.3.1.post4"
   ],
   [
     "multihash",
@@ -33553,7 +33573,7 @@
   ],
   [
     "mwlib",
-    "0.17.0"
+    "0.17.0.post1"
   ],
   [
     "mwoauth",
@@ -35725,7 +35745,7 @@
   ],
   [
     "netCDF4",
-    "1.6.5"
+    "1.7.1.post1"
   ],
   [
     "netaddr",
@@ -36284,6 +36304,10 @@
     "1.9.1"
   ],
   [
+    "nonebot-adapter-cqhttp",
+    "2.0.0a11.post2"
+  ],
+  [
     "nonebot-adapter-onebot",
     "2.4.4"
   ],
@@ -36720,6 +36744,10 @@
     "2.1.1"
   ],
   [
+    "nutil",
+    "1.0.0.post137"
+  ],
+  [
     "nutils",
     "8.8"
   ],
@@ -36829,7 +36857,7 @@
   ],
   [
     "oauth2",
-    "1.5.211"
+    "1.9.0.post1"
   ],
   [
     "oauth2-client",
@@ -37009,7 +37037,7 @@
   ],
   [
     "oead",
-    "1.2.7"
+    "1.2.9.post4"
   ],
   [
     "oedialect",
@@ -37125,7 +37153,7 @@
   ],
   [
     "ome-types",
-    "0.5.1"
+    "0.5.1.post1"
   ],
   [
     "ome-zarr",
@@ -38217,7 +38245,7 @@
   ],
   [
     "orix",
-    "0.12.1"
+    "0.12.1.post0"
   ],
   [
     "orjson",
@@ -38373,7 +38401,7 @@
   ],
   [
     "osqp",
-    "0.6.7"
+    "0.6.7.post0"
   ],
   [
     "osrparse",
@@ -38409,7 +38437,7 @@
   ],
   [
     "outcome",
-    "1.3.0"
+    "1.3.0.post0"
   ],
   [
     "outcome-utils",
@@ -38549,7 +38577,7 @@
   ],
   [
     "packaging-legacy",
-    "23.0"
+    "23.0.post0"
   ],
   [
     "packbits",
@@ -39009,7 +39037,7 @@
   ],
   [
     "password-strength",
-    "0.0.2-0"
+    "0.0.3.post2"
   ],
   [
     "passwordgenerator",
@@ -39073,7 +39101,7 @@
   ],
   [
     "pathlib2",
-    "2.3.6"
+    "2.3.7.post1"
   ],
   [
     "pathlib3x",
@@ -40148,6 +40176,18 @@
     "0.2.0"
   ],
   [
+    "pitop.common",
+    "0.33.0.post1"
+  ],
+  [
+    "pitop.core",
+    "0.33.0.post1"
+  ],
+  [
+    "pitop.pma",
+    "0.33.0.post1"
+  ],
+  [
     "pixcat",
     "0.1.4"
   ],
@@ -40857,7 +40897,7 @@
   ],
   [
     "plum-dispatch",
-    "2.5.1"
+    "2.5.1.post1"
   ],
   [
     "plum-py",
@@ -41105,7 +41145,7 @@
   ],
   [
     "polyaxon",
-    "2.2.0"
+    "2.2.0.post1"
   ],
   [
     "polyfactory",
@@ -42073,7 +42113,7 @@
   ],
   [
     "puchikarui",
-    "0.1"
+    "0.2a2.post5"
   ],
   [
     "pudb",
@@ -42317,7 +42357,7 @@
   ],
   [
     "py-backwards-astunparse",
-    "1.5.0"
+    "1.5.0.post3"
   ],
   [
     "py-bcrypt",
@@ -42369,7 +42409,7 @@
   ],
   [
     "py-desmume",
-    "0.0.5"
+    "0.0.5.post0"
   ],
   [
     "py-dmidecode",
@@ -42504,6 +42544,10 @@
     "0.10.0"
   ],
   [
+    "py-radix-sr",
+    "1.0.0.post1"
+  ],
+  [
     "py-securestring",
     "0.2"
   ],
@@ -42605,7 +42649,7 @@
   ],
   [
     "py3-validate-email",
-    "1.0.5"
+    "1.0.5.post1"
   ],
   [
     "py3Dmol",
@@ -43321,7 +43365,7 @@
   ],
   [
     "pyclipper",
-    "1.3.0"
+    "1.3.0.post5"
   ],
   [
     "pycln",
@@ -45781,7 +45825,7 @@
   ],
   [
     "pyownet",
-    "0.10.0"
+    "0.10.0.post1"
   ],
   [
     "pyp",
@@ -46281,7 +46325,7 @@
   ],
   [
     "pyramid_ldap",
-    "0.3.1"
+    "0.3.1.post1"
   ],
   [
     "pyramid_mailer",
@@ -46901,7 +46945,7 @@
   ],
   [
     "pyspark-stubs",
-    "3.0.0"
+    "2.4.0.post12"
   ],
   [
     "pyspark-test",
@@ -47065,7 +47109,7 @@
   ],
   [
     "pysvg-py3",
-    "0.2.2"
+    "0.2.2.post3"
   ],
   [
     "pysvn",
@@ -47900,6 +47944,10 @@
     "0.8.1"
   ],
   [
+    "pytest-tornasync",
+    "0.6.0.post2"
+  ],
+  [
     "pytest-travis-fold",
     "1.3.0"
   ],
@@ -48017,7 +48065,7 @@
   ],
   [
     "python-axolotl-curve25519",
-    "0.4.1"
+    "0.4.1.post2"
   ],
   [
     "python-barbicanclient",
@@ -48189,7 +48237,7 @@
   ],
   [
     "python-dateutil",
-    "2.9.0"
+    "2.9.0.post0"
   ],
   [
     "python-dbusmock",
@@ -48273,7 +48321,7 @@
   ],
   [
     "python-ev3dev2",
-    "2.1.0"
+    "2.1.0.post1"
   ],
   [
     "python-evtx",
@@ -48461,7 +48509,7 @@
   ],
   [
     "python-intervals",
-    "1.10.0"
+    "1.10.0.post1"
   ],
   [
     "python-ioc",
@@ -49209,7 +49257,7 @@
   ],
   [
     "python3-indy",
-    "1.16.0"
+    "1.16.0.post286"
   ],
   [
     "python3-ldap",
@@ -49381,7 +49429,7 @@
   ],
   [
     "pytorch-ignite",
-    "0.4.13"
+    "0.5.0.post2"
   ],
   [
     "pytorch-lightning",
@@ -49389,7 +49437,7 @@
   ],
   [
     "pytorch-lightning-bolts",
-    "0.3.2"
+    "0.3.2.post1"
   ],
   [
     "pytorch-metric-learning",
@@ -49521,7 +49569,7 @@
   ],
   [
     "pytz-deprecation-shim",
-    "0.1.0"
+    "0.1.0.post0"
   ],
   [
     "pytzdata",
@@ -49605,7 +49653,7 @@
   ],
   [
     "pyuwsgi",
-    "2.0.23"
+    "2.0.23.post0"
   ],
   [
     "pyvalem",
@@ -49985,7 +50033,7 @@
   ],
   [
     "qdldl",
-    "0.1.7"
+    "0.1.7.post4"
   ],
   [
     "qdrant-client",
@@ -50077,7 +50125,7 @@
   ],
   [
     "qmk-dotty-dict",
-    "1.3.0"
+    "1.3.0.post1"
   ],
   [
     "qnap-qsw",
@@ -50309,7 +50357,7 @@
   ],
   [
     "qutip",
-    "5.0.3"
+    "5.0.3.post1"
   ],
   [
     "r2pipe",
@@ -50509,7 +50557,7 @@
   ],
   [
     "ratelimiter",
-    "1.2.0"
+    "1.2.0.post0"
   ],
   [
     "rath",
@@ -50886,6 +50934,10 @@
   [
     "refinitiv-data",
     "1.6.1"
+  ],
+  [
+    "refinitiv-dataplatform",
+    "1.0.0a11.post1"
   ],
   [
     "reflink",
@@ -51405,7 +51457,7 @@
   ],
   [
     "rethinkdb",
-    "2.4.10"
+    "2.4.10.post1"
   ],
   [
     "retina-face",
@@ -52053,7 +52105,7 @@
   ],
   [
     "rowan",
-    "1.2.2"
+    "1.3.0.post1"
   ],
   [
     "rowgenerators",
@@ -52653,7 +52705,7 @@
   ],
   [
     "sarge",
-    "0.1.6"
+    "0.1.7.post1"
   ],
   [
     "sarif-om",
@@ -53493,7 +53545,7 @@
   ],
   [
     "senaite.api",
-    "1.2.3"
+    "1.2.3.post2"
   ],
   [
     "senaite.core",
@@ -54473,7 +54525,7 @@
   ],
   [
     "skia-pathops",
-    "0.8.0"
+    "0.8.0.post1"
   ],
   [
     "skidl",
@@ -54493,7 +54545,7 @@
   ],
   [
     "sklearn",
-    "0.0"
+    "0.0.post12"
   ],
   [
     "sklearn-crfsuite",
@@ -54716,6 +54768,10 @@
     "1.13.0"
   ],
   [
+    "smbus",
+    "1.1.post2"
+  ],
+  [
     "smbus-cffi",
     "0.5.1"
   ],
@@ -54765,7 +54821,7 @@
   ],
   [
     "smsframework",
-    "0.0.7-1"
+    "0.0.9.post3"
   ],
   [
     "smt",
@@ -55849,7 +55905,7 @@
   ],
   [
     "sqlacodegen",
-    "2.3.0"
+    "2.3.0.post1"
   ],
   [
     "sqlakeyset",
@@ -56161,15 +56217,15 @@
   ],
   [
     "stac-fastapi.api",
-    "2.5.5"
+    "2.5.5.post1"
   ],
   [
     "stac-fastapi.extensions",
-    "2.5.5"
+    "2.5.5.post1"
   ],
   [
     "stac-fastapi.types",
-    "2.5.5"
+    "2.5.5.post1"
   ],
   [
     "stack-data",
@@ -56941,7 +56997,7 @@
   ],
   [
     "sunpy",
-    "5.1.4"
+    "6.0.0rc1.post1"
   ],
   [
     "suntime",
@@ -57793,7 +57849,7 @@
   ],
   [
     "tensorrt",
-    "10.2.0"
+    "10.2.0.post1"
   ],
   [
     "tensorstore",
@@ -58009,7 +58065,7 @@
   ],
   [
     "textblob",
-    "0.18.0"
+    "0.18.0.post0"
   ],
   [
     "textdistance",
@@ -58230,10 +58286,6 @@
   [
     "three-merge",
     "0.1.1"
-  ],
-  [
-    "threepio",
-    "0.2"
   ],
   [
     "thresult",
@@ -58909,7 +58961,7 @@
   ],
   [
     "torchmetrics",
-    "1.4.0"
+    "1.4.0.post0"
   ],
   [
     "torchnet",
@@ -62081,7 +62133,7 @@
   ],
   [
     "unicorn",
-    "2.0.1"
+    "2.0.1.post1"
   ],
   [
     "unicrypto",
@@ -62545,7 +62597,7 @@
   ],
   [
     "usort",
-    "1.0.8"
+    "1.0.8.post1"
   ],
   [
     "ussclicore",
@@ -62761,7 +62813,7 @@
   ],
   [
     "vbml",
-    "1.1"
+    "1.1.post1"
   ],
   [
     "vcard",
@@ -62969,7 +63021,7 @@
   ],
   [
     "vhacdx",
-    "0.0.8"
+    "0.0.8.post1"
   ],
   [
     "vharfbuzz",
@@ -62977,7 +63029,7 @@
   ],
   [
     "vici",
-    "5.9.11"
+    "5.9.11.post1"
   ],
   [
     "videocr",
@@ -63525,7 +63577,7 @@
   ],
   [
     "wavedrom",
-    "2.0.3"
+    "2.0.3.post3"
   ],
   [
     "wavefile",
@@ -63717,7 +63769,7 @@
   ],
   [
     "webrtcvad-wheels",
-    "2.0.11"
+    "2.0.11.post1"
   ],
   [
     "webservices",
@@ -64637,7 +64689,7 @@
   ],
   [
     "xoutil",
-    "2.1.9"
+    "2.1.10.post7"
   ],
   [
     "xpath-expressions",
@@ -65321,11 +65373,11 @@
   ],
   [
     "zc.lockfile",
-    "2.0"
+    "3.0.post1"
   ],
   [
     "zc.monitor",
-    "0.4.0"
+    "0.4.0.post1"
   ],
   [
     "zc.queue",
@@ -65957,7 +66009,7 @@
   ],
   [
     "zope.interface",
-    "6.3"
+    "6.4.post2"
   ],
   [
     "zope.intid",
@@ -66218,5 +66270,3181 @@
   [
     "zxing-cpp",
     "2.2.0"
+  ],
+  [
+    "inject",
+    "1.0"
+  ],
+  [
+    "inject",
+    "1.0.1"
+  ],
+  [
+    "inject",
+    "2.0.0"
+  ],
+  [
+    "inject",
+    "3.0.0"
+  ],
+  [
+    "inject",
+    "3.1.0"
+  ],
+  [
+    "inject",
+    "3.1.1"
+  ],
+  [
+    "inject",
+    "3.2.0"
+  ],
+  [
+    "inject",
+    "3.3.0"
+  ],
+  [
+    "inject",
+    "3.3.1"
+  ],
+  [
+    "inject",
+    "3.3.2"
+  ],
+  [
+    "inject",
+    "3.4.0"
+  ],
+  [
+    "inject",
+    "3.5.0"
+  ],
+  [
+    "inject",
+    "3.5.1"
+  ],
+  [
+    "inject",
+    "3.5.2"
+  ],
+  [
+    "inject",
+    "3.5.3"
+  ],
+  [
+    "inject",
+    "3.5.4"
+  ],
+  [
+    "inject",
+    "4.0.0"
+  ],
+  [
+    "inject",
+    "4.1.0"
+  ],
+  [
+    "inject",
+    "4.1.1"
+  ],
+  [
+    "inject",
+    "4.1.2"
+  ],
+  [
+    "inject",
+    "4.2.0"
+  ],
+  [
+    "inject",
+    "4.3.0"
+  ],
+  [
+    "inject",
+    "4.3.1"
+  ],
+  [
+    "inject",
+    "5.0.0"
+  ],
+  [
+    "inject",
+    "5.1.0"
+  ],
+  [
+    "inject",
+    "5.2.0"
+  ],
+  [
+    "inject",
+    "5.2.1"
+  ],
+  [
+    "sqlglotrs",
+    "0.1.0"
+  ],
+  [
+    "sqlglotrs",
+    "0.1.1"
+  ],
+  [
+    "sqlglotrs",
+    "0.1.2"
+  ],
+  [
+    "sqlglotrs",
+    "0.1.3"
+  ],
+  [
+    "sqlglotrs",
+    "0.2.0"
+  ],
+  [
+    "sqlglotrs",
+    "0.2.5"
+  ],
+  [
+    "sqlglotrs",
+    "0.2.6"
+  ],
+  [
+    "sqlglotrs",
+    "0.2.7"
+  ],
+  [
+    "sqlglotrs",
+    "0.2.8"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.10.37"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.11.43"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.11.45"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.13.47"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.15.55"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.16.59"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.17.61"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.17.63"
+  ],
+  [
+    "opencv-python-headless",
+    "3.4.18.65"
+  ],
+  [
+    "opencv-python-headless",
+    "4.10.0.82"
+  ],
+  [
+    "opencv-python-headless",
+    "4.10.0.84"
+  ],
+  [
+    "opencv-python-headless",
+    "4.3.0.38"
+  ],
+  [
+    "opencv-python-headless",
+    "4.4.0.46"
+  ],
+  [
+    "opencv-python-headless",
+    "4.5.1.48"
+  ],
+  [
+    "opencv-python-headless",
+    "4.5.3.56"
+  ],
+  [
+    "opencv-python-headless",
+    "4.5.4.58"
+  ],
+  [
+    "opencv-python-headless",
+    "4.5.4.60"
+  ],
+  [
+    "opencv-python-headless",
+    "4.5.5.64"
+  ],
+  [
+    "opencv-python-headless",
+    "4.6.0.66"
+  ],
+  [
+    "opencv-python-headless",
+    "4.7.0.72"
+  ],
+  [
+    "opencv-python-headless",
+    "4.8.0.76"
+  ],
+  [
+    "opencv-python-headless",
+    "4.8.1.78"
+  ],
+  [
+    "opencv-python-headless",
+    "4.9.0.80"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.11"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.12"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.13"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.14"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.6"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.7"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.8"
+  ],
+  [
+    "graia-broadcast",
+    "0.0.9"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.1.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.10.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.10.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.11.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.11.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.11.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.11.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.11.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.12.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.13.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.13.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.14.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.14.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.14.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.14.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.14.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.15.6"
+  ],
+  [
+    "graia-broadcast",
+    "0.16.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.16.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.17.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.18.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.18.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.18.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.19.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.19.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.19.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.2.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.2.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.2.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.20.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.21.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.21.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.22.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.22.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.23.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.23.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.23.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.23.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.23.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.3.6"
+  ],
+  [
+    "graia-broadcast",
+    "0.4.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.4.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.4.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.5.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.5.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.5.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.5.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.6.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.6.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.6.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.6.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.6.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.7.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.0"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.1"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.10"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.11"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.2"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.3"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.4"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.5"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.6"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.7"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.8"
+  ],
+  [
+    "graia-broadcast",
+    "0.8.9"
+  ],
+  [
+    "graia-broadcast",
+    "0.9.0"
+  ],
+  [
+    "orjson",
+    "2.0.10"
+  ],
+  [
+    "orjson",
+    "2.0.11"
+  ],
+  [
+    "orjson",
+    "2.0.7"
+  ],
+  [
+    "orjson",
+    "2.0.8"
+  ],
+  [
+    "orjson",
+    "2.0.9"
+  ],
+  [
+    "orjson",
+    "2.1.0"
+  ],
+  [
+    "orjson",
+    "2.1.1"
+  ],
+  [
+    "orjson",
+    "2.1.2"
+  ],
+  [
+    "orjson",
+    "2.1.3"
+  ],
+  [
+    "orjson",
+    "2.1.4"
+  ],
+  [
+    "orjson",
+    "2.2.0"
+  ],
+  [
+    "orjson",
+    "2.2.1"
+  ],
+  [
+    "orjson",
+    "2.2.2"
+  ],
+  [
+    "orjson",
+    "2.3.0"
+  ],
+  [
+    "orjson",
+    "2.4.0"
+  ],
+  [
+    "orjson",
+    "2.5.0"
+  ],
+  [
+    "orjson",
+    "2.5.1"
+  ],
+  [
+    "orjson",
+    "2.5.2"
+  ],
+  [
+    "orjson",
+    "2.6.0"
+  ],
+  [
+    "orjson",
+    "2.6.1"
+  ],
+  [
+    "orjson",
+    "2.6.2"
+  ],
+  [
+    "orjson",
+    "2.6.3"
+  ],
+  [
+    "orjson",
+    "2.6.4"
+  ],
+  [
+    "orjson",
+    "2.6.5"
+  ],
+  [
+    "orjson",
+    "2.6.6"
+  ],
+  [
+    "orjson",
+    "2.6.7"
+  ],
+  [
+    "orjson",
+    "2.6.8"
+  ],
+  [
+    "orjson",
+    "3.0.0"
+  ],
+  [
+    "orjson",
+    "3.0.1"
+  ],
+  [
+    "orjson",
+    "3.0.2"
+  ],
+  [
+    "orjson",
+    "3.1.0"
+  ],
+  [
+    "orjson",
+    "3.1.1"
+  ],
+  [
+    "orjson",
+    "3.1.2"
+  ],
+  [
+    "orjson",
+    "3.10.0"
+  ],
+  [
+    "orjson",
+    "3.10.1"
+  ],
+  [
+    "orjson",
+    "3.10.2"
+  ],
+  [
+    "orjson",
+    "3.10.3"
+  ],
+  [
+    "orjson",
+    "3.10.4"
+  ],
+  [
+    "orjson",
+    "3.10.5"
+  ],
+  [
+    "orjson",
+    "3.10.6"
+  ],
+  [
+    "orjson",
+    "3.2.0"
+  ],
+  [
+    "orjson",
+    "3.2.1"
+  ],
+  [
+    "orjson",
+    "3.2.2"
+  ],
+  [
+    "orjson",
+    "3.3.0"
+  ],
+  [
+    "orjson",
+    "3.3.1"
+  ],
+  [
+    "orjson",
+    "3.4.0"
+  ],
+  [
+    "orjson",
+    "3.4.1"
+  ],
+  [
+    "orjson",
+    "3.4.2"
+  ],
+  [
+    "orjson",
+    "3.4.3"
+  ],
+  [
+    "orjson",
+    "3.4.4"
+  ],
+  [
+    "orjson",
+    "3.4.5"
+  ],
+  [
+    "orjson",
+    "3.4.6"
+  ],
+  [
+    "orjson",
+    "3.4.7"
+  ],
+  [
+    "orjson",
+    "3.4.8"
+  ],
+  [
+    "orjson",
+    "3.5.0"
+  ],
+  [
+    "orjson",
+    "3.5.1"
+  ],
+  [
+    "orjson",
+    "3.5.2"
+  ],
+  [
+    "orjson",
+    "3.5.3"
+  ],
+  [
+    "orjson",
+    "3.5.4"
+  ],
+  [
+    "orjson",
+    "3.6.0"
+  ],
+  [
+    "orjson",
+    "3.6.1"
+  ],
+  [
+    "orjson",
+    "3.6.2"
+  ],
+  [
+    "orjson",
+    "3.6.3"
+  ],
+  [
+    "orjson",
+    "3.6.4"
+  ],
+  [
+    "orjson",
+    "3.6.5"
+  ],
+  [
+    "orjson",
+    "3.6.6"
+  ],
+  [
+    "orjson",
+    "3.6.7"
+  ],
+  [
+    "orjson",
+    "3.6.8"
+  ],
+  [
+    "orjson",
+    "3.6.9"
+  ],
+  [
+    "orjson",
+    "3.7.0"
+  ],
+  [
+    "orjson",
+    "3.7.1"
+  ],
+  [
+    "orjson",
+    "3.7.10"
+  ],
+  [
+    "orjson",
+    "3.7.11"
+  ],
+  [
+    "orjson",
+    "3.7.12"
+  ],
+  [
+    "orjson",
+    "3.7.2"
+  ],
+  [
+    "orjson",
+    "3.7.3"
+  ],
+  [
+    "orjson",
+    "3.7.4"
+  ],
+  [
+    "orjson",
+    "3.7.5"
+  ],
+  [
+    "orjson",
+    "3.7.6"
+  ],
+  [
+    "orjson",
+    "3.7.7"
+  ],
+  [
+    "orjson",
+    "3.7.8"
+  ],
+  [
+    "orjson",
+    "3.7.9"
+  ],
+  [
+    "orjson",
+    "3.8.0"
+  ],
+  [
+    "orjson",
+    "3.8.1"
+  ],
+  [
+    "orjson",
+    "3.8.10"
+  ],
+  [
+    "orjson",
+    "3.8.11"
+  ],
+  [
+    "orjson",
+    "3.8.12"
+  ],
+  [
+    "orjson",
+    "3.8.13"
+  ],
+  [
+    "orjson",
+    "3.8.14"
+  ],
+  [
+    "orjson",
+    "3.8.2"
+  ],
+  [
+    "orjson",
+    "3.8.3"
+  ],
+  [
+    "orjson",
+    "3.8.4"
+  ],
+  [
+    "orjson",
+    "3.8.5"
+  ],
+  [
+    "orjson",
+    "3.8.6"
+  ],
+  [
+    "orjson",
+    "3.8.7"
+  ],
+  [
+    "orjson",
+    "3.8.8"
+  ],
+  [
+    "orjson",
+    "3.8.9"
+  ],
+  [
+    "orjson",
+    "3.9.0"
+  ],
+  [
+    "orjson",
+    "3.9.1"
+  ],
+  [
+    "orjson",
+    "3.9.10"
+  ],
+  [
+    "orjson",
+    "3.9.11"
+  ],
+  [
+    "orjson",
+    "3.9.12"
+  ],
+  [
+    "orjson",
+    "3.9.13"
+  ],
+  [
+    "orjson",
+    "3.9.14"
+  ],
+  [
+    "orjson",
+    "3.9.15"
+  ],
+  [
+    "orjson",
+    "3.9.2"
+  ],
+  [
+    "orjson",
+    "3.9.3"
+  ],
+  [
+    "orjson",
+    "3.9.4"
+  ],
+  [
+    "orjson",
+    "3.9.5"
+  ],
+  [
+    "orjson",
+    "3.9.6"
+  ],
+  [
+    "orjson",
+    "3.9.7"
+  ],
+  [
+    "orjson",
+    "3.9.8"
+  ],
+  [
+    "orjson",
+    "3.9.9"
+  ],
+  [
+    "libcst",
+    "0.1"
+  ],
+  [
+    "libcst",
+    "0.1.1"
+  ],
+  [
+    "libcst",
+    "0.1.2"
+  ],
+  [
+    "libcst",
+    "0.1.3"
+  ],
+  [
+    "libcst",
+    "0.2.0"
+  ],
+  [
+    "libcst",
+    "0.2.1"
+  ],
+  [
+    "libcst",
+    "0.2.2"
+  ],
+  [
+    "libcst",
+    "0.2.3"
+  ],
+  [
+    "libcst",
+    "0.2.4"
+  ],
+  [
+    "libcst",
+    "0.2.5"
+  ],
+  [
+    "libcst",
+    "0.2.6"
+  ],
+  [
+    "libcst",
+    "0.2.7"
+  ],
+  [
+    "libcst",
+    "0.3.0"
+  ],
+  [
+    "libcst",
+    "0.3.1"
+  ],
+  [
+    "libcst",
+    "0.3.10"
+  ],
+  [
+    "libcst",
+    "0.3.11"
+  ],
+  [
+    "libcst",
+    "0.3.12"
+  ],
+  [
+    "libcst",
+    "0.3.13"
+  ],
+  [
+    "libcst",
+    "0.3.14"
+  ],
+  [
+    "libcst",
+    "0.3.15"
+  ],
+  [
+    "libcst",
+    "0.3.16"
+  ],
+  [
+    "libcst",
+    "0.3.17"
+  ],
+  [
+    "libcst",
+    "0.3.18"
+  ],
+  [
+    "libcst",
+    "0.3.19"
+  ],
+  [
+    "libcst",
+    "0.3.2"
+  ],
+  [
+    "libcst",
+    "0.3.20"
+  ],
+  [
+    "libcst",
+    "0.3.21"
+  ],
+  [
+    "libcst",
+    "0.3.22"
+  ],
+  [
+    "libcst",
+    "0.3.23"
+  ],
+  [
+    "libcst",
+    "0.3.3"
+  ],
+  [
+    "libcst",
+    "0.3.4"
+  ],
+  [
+    "libcst",
+    "0.3.5"
+  ],
+  [
+    "libcst",
+    "0.3.6"
+  ],
+  [
+    "libcst",
+    "0.3.7"
+  ],
+  [
+    "libcst",
+    "0.3.8"
+  ],
+  [
+    "libcst",
+    "0.3.9"
+  ],
+  [
+    "libcst",
+    "0.4.0"
+  ],
+  [
+    "libcst",
+    "0.4.1"
+  ],
+  [
+    "libcst",
+    "0.4.10"
+  ],
+  [
+    "libcst",
+    "0.4.2"
+  ],
+  [
+    "libcst",
+    "0.4.3"
+  ],
+  [
+    "libcst",
+    "0.4.4"
+  ],
+  [
+    "libcst",
+    "0.4.5"
+  ],
+  [
+    "libcst",
+    "0.4.6"
+  ],
+  [
+    "libcst",
+    "0.4.7"
+  ],
+  [
+    "libcst",
+    "0.4.9"
+  ],
+  [
+    "libcst",
+    "1.0.0"
+  ],
+  [
+    "libcst",
+    "1.0.1"
+  ],
+  [
+    "libcst",
+    "1.1.0"
+  ],
+  [
+    "libcst",
+    "1.2.0"
+  ],
+  [
+    "libcst",
+    "1.3.0"
+  ],
+  [
+    "libcst",
+    "1.3.1"
+  ],
+  [
+    "libcst",
+    "1.4.0"
+  ],
+  [
+    "nh3",
+    "0.1.0"
+  ],
+  [
+    "nh3",
+    "0.1.1"
+  ],
+  [
+    "nh3",
+    "0.1.2"
+  ],
+  [
+    "nh3",
+    "0.2.0"
+  ],
+  [
+    "nh3",
+    "0.2.1"
+  ],
+  [
+    "nh3",
+    "0.2.10"
+  ],
+  [
+    "nh3",
+    "0.2.11"
+  ],
+  [
+    "nh3",
+    "0.2.12"
+  ],
+  [
+    "nh3",
+    "0.2.13"
+  ],
+  [
+    "nh3",
+    "0.2.14"
+  ],
+  [
+    "nh3",
+    "0.2.15"
+  ],
+  [
+    "nh3",
+    "0.2.16"
+  ],
+  [
+    "nh3",
+    "0.2.17"
+  ],
+  [
+    "nh3",
+    "0.2.18"
+  ],
+  [
+    "nh3",
+    "0.2.2"
+  ],
+  [
+    "nh3",
+    "0.2.3"
+  ],
+  [
+    "nh3",
+    "0.2.4"
+  ],
+  [
+    "nh3",
+    "0.2.5"
+  ],
+  [
+    "nh3",
+    "0.2.6"
+  ],
+  [
+    "nh3",
+    "0.2.7"
+  ],
+  [
+    "nh3",
+    "0.2.8"
+  ],
+  [
+    "nh3",
+    "0.2.9"
+  ],
+  [
+    "tiktoken",
+    "0.1.1"
+  ],
+  [
+    "tiktoken",
+    "0.1.2"
+  ],
+  [
+    "tiktoken",
+    "0.2.0"
+  ],
+  [
+    "tiktoken",
+    "0.3.0"
+  ],
+  [
+    "tiktoken",
+    "0.3.1"
+  ],
+  [
+    "tiktoken",
+    "0.3.2"
+  ],
+  [
+    "tiktoken",
+    "0.3.3"
+  ],
+  [
+    "tiktoken",
+    "0.4.0"
+  ],
+  [
+    "tiktoken",
+    "0.5.0"
+  ],
+  [
+    "tiktoken",
+    "0.5.1"
+  ],
+  [
+    "tiktoken",
+    "0.5.2"
+  ],
+  [
+    "tiktoken",
+    "0.6.0"
+  ],
+  [
+    "tiktoken",
+    "0.7.0"
+  ],
+  [
+    "bs4",
+    "0.0.0"
+  ],
+  [
+    "bs4",
+    "0.0.1"
+  ],
+  [
+    "bs4",
+    "0.0.2"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.1"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.10"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.11"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.12"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.13"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.14"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.15"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.16"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.18"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.19"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.2"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.20"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.21"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.22"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.23"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.24"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.25"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.26"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.27"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.28"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.29"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.3"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.30"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.4"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.5"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.6"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.7"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.8"
+  ],
+  [
+    "tpdcc-core",
+    "0.0.9"
+  ],
+  [
+    "timm",
+    "0.1.1"
+  ],
+  [
+    "timm",
+    "0.1.10"
+  ],
+  [
+    "timm",
+    "0.1.12"
+  ],
+  [
+    "timm",
+    "0.1.14"
+  ],
+  [
+    "timm",
+    "0.1.16"
+  ],
+  [
+    "timm",
+    "0.1.18"
+  ],
+  [
+    "timm",
+    "0.1.2"
+  ],
+  [
+    "timm",
+    "0.1.20"
+  ],
+  [
+    "timm",
+    "0.1.22"
+  ],
+  [
+    "timm",
+    "0.1.24"
+  ],
+  [
+    "timm",
+    "0.1.26"
+  ],
+  [
+    "timm",
+    "0.1.28"
+  ],
+  [
+    "timm",
+    "0.1.30"
+  ],
+  [
+    "timm",
+    "0.1.4"
+  ],
+  [
+    "timm",
+    "0.1.6"
+  ],
+  [
+    "timm",
+    "0.1.8"
+  ],
+  [
+    "timm",
+    "0.2.1"
+  ],
+  [
+    "timm",
+    "0.3.1"
+  ],
+  [
+    "timm",
+    "0.3.2"
+  ],
+  [
+    "timm",
+    "0.3.3"
+  ],
+  [
+    "timm",
+    "0.3.4"
+  ],
+  [
+    "timm",
+    "0.4.12"
+  ],
+  [
+    "timm",
+    "0.4.5"
+  ],
+  [
+    "timm",
+    "0.4.9"
+  ],
+  [
+    "timm",
+    "0.5.4"
+  ],
+  [
+    "timm",
+    "0.6.11"
+  ],
+  [
+    "timm",
+    "0.6.12"
+  ],
+  [
+    "timm",
+    "0.6.13"
+  ],
+  [
+    "timm",
+    "0.6.5"
+  ],
+  [
+    "timm",
+    "0.6.7"
+  ],
+  [
+    "timm",
+    "0.9.0"
+  ],
+  [
+    "timm",
+    "0.9.1"
+  ],
+  [
+    "timm",
+    "0.9.10"
+  ],
+  [
+    "timm",
+    "0.9.11"
+  ],
+  [
+    "timm",
+    "0.9.12"
+  ],
+  [
+    "timm",
+    "0.9.16"
+  ],
+  [
+    "timm",
+    "0.9.2"
+  ],
+  [
+    "timm",
+    "0.9.5"
+  ],
+  [
+    "timm",
+    "0.9.6"
+  ],
+  [
+    "timm",
+    "0.9.7"
+  ],
+  [
+    "timm",
+    "0.9.8"
+  ],
+  [
+    "timm",
+    "0.9.9"
+  ],
+  [
+    "timm",
+    "1.0.3"
+  ],
+  [
+    "timm",
+    "1.0.7"
+  ],
+  [
+    "kiwipy",
+    "0.1.0"
+  ],
+  [
+    "kiwipy",
+    "0.2.0"
+  ],
+  [
+    "kiwipy",
+    "0.2.1"
+  ],
+  [
+    "kiwipy",
+    "0.3.1"
+  ],
+  [
+    "kiwipy",
+    "0.3.10"
+  ],
+  [
+    "kiwipy",
+    "0.3.11"
+  ],
+  [
+    "kiwipy",
+    "0.3.2"
+  ],
+  [
+    "kiwipy",
+    "0.3.3"
+  ],
+  [
+    "kiwipy",
+    "0.3.4"
+  ],
+  [
+    "kiwipy",
+    "0.3.5"
+  ],
+  [
+    "kiwipy",
+    "0.3.6"
+  ],
+  [
+    "kiwipy",
+    "0.3.7"
+  ],
+  [
+    "kiwipy",
+    "0.3.8"
+  ],
+  [
+    "kiwipy",
+    "0.3.9"
+  ],
+  [
+    "kiwipy",
+    "0.4.0"
+  ],
+  [
+    "kiwipy",
+    "0.4.1"
+  ],
+  [
+    "kiwipy",
+    "0.4.2"
+  ],
+  [
+    "kiwipy",
+    "0.5.0"
+  ],
+  [
+    "kiwipy",
+    "0.5.1"
+  ],
+  [
+    "kiwipy",
+    "0.5.2"
+  ],
+  [
+    "kiwipy",
+    "0.5.3"
+  ],
+  [
+    "kiwipy",
+    "0.5.4"
+  ],
+  [
+    "kiwipy",
+    "0.5.5"
+  ],
+  [
+    "kiwipy",
+    "0.6.0"
+  ],
+  [
+    "kiwipy",
+    "0.6.1"
+  ],
+  [
+    "kiwipy",
+    "0.7.0"
+  ],
+  [
+    "kiwipy",
+    "0.7.1"
+  ],
+  [
+    "kiwipy",
+    "0.7.2"
+  ],
+  [
+    "kiwipy",
+    "0.7.3"
+  ],
+  [
+    "kiwipy",
+    "0.7.4"
+  ],
+  [
+    "kiwipy",
+    "0.7.5"
+  ],
+  [
+    "kiwipy",
+    "0.7.6"
+  ],
+  [
+    "kiwipy",
+    "0.7.7"
+  ],
+  [
+    "kiwipy",
+    "0.7.8"
+  ],
+  [
+    "kiwipy",
+    "0.8.0"
+  ],
+  [
+    "kiwipy",
+    "0.8.1"
+  ],
+  [
+    "kiwipy",
+    "0.8.2"
+  ],
+  [
+    "kiwipy",
+    "0.8.3"
+  ],
+  [
+    "kiwipy",
+    "0.8.4"
+  ],
+  [
+    "pendulum",
+    "0.1"
+  ],
+  [
+    "pendulum",
+    "0.1.1"
+  ],
+  [
+    "pendulum",
+    "0.2"
+  ],
+  [
+    "pendulum",
+    "0.3"
+  ],
+  [
+    "pendulum",
+    "0.3.1"
+  ],
+  [
+    "pendulum",
+    "0.4"
+  ],
+  [
+    "pendulum",
+    "0.5"
+  ],
+  [
+    "pendulum",
+    "0.5.1"
+  ],
+  [
+    "pendulum",
+    "0.5.2"
+  ],
+  [
+    "pendulum",
+    "0.5.3"
+  ],
+  [
+    "pendulum",
+    "0.5.4"
+  ],
+  [
+    "pendulum",
+    "0.5.5"
+  ],
+  [
+    "pendulum",
+    "0.6.0"
+  ],
+  [
+    "pendulum",
+    "0.6.1"
+  ],
+  [
+    "pendulum",
+    "0.6.2"
+  ],
+  [
+    "pendulum",
+    "0.6.3"
+  ],
+  [
+    "pendulum",
+    "0.6.4"
+  ],
+  [
+    "pendulum",
+    "0.6.5"
+  ],
+  [
+    "pendulum",
+    "0.6.6"
+  ],
+  [
+    "pendulum",
+    "0.7.0"
+  ],
+  [
+    "pendulum",
+    "0.8.0"
+  ],
+  [
+    "pendulum",
+    "1.0.0"
+  ],
+  [
+    "pendulum",
+    "1.0.1"
+  ],
+  [
+    "pendulum",
+    "1.0.2"
+  ],
+  [
+    "pendulum",
+    "1.1.0"
+  ],
+  [
+    "pendulum",
+    "1.1.1"
+  ],
+  [
+    "pendulum",
+    "1.2.0"
+  ],
+  [
+    "pendulum",
+    "1.2.1"
+  ],
+  [
+    "pendulum",
+    "1.2.2"
+  ],
+  [
+    "pendulum",
+    "1.2.3"
+  ],
+  [
+    "pendulum",
+    "1.2.4"
+  ],
+  [
+    "pendulum",
+    "1.2.5"
+  ],
+  [
+    "pendulum",
+    "1.3.0"
+  ],
+  [
+    "pendulum",
+    "1.3.1"
+  ],
+  [
+    "pendulum",
+    "1.3.2"
+  ],
+  [
+    "pendulum",
+    "1.4.0"
+  ],
+  [
+    "pendulum",
+    "1.4.1"
+  ],
+  [
+    "pendulum",
+    "1.4.2"
+  ],
+  [
+    "pendulum",
+    "1.4.3"
+  ],
+  [
+    "pendulum",
+    "1.4.4"
+  ],
+  [
+    "pendulum",
+    "1.5.0"
+  ],
+  [
+    "pendulum",
+    "1.5.1"
+  ],
+  [
+    "pendulum",
+    "2.0.0"
+  ],
+  [
+    "pendulum",
+    "2.0.1"
+  ],
+  [
+    "pendulum",
+    "2.0.2"
+  ],
+  [
+    "pendulum",
+    "2.0.3"
+  ],
+  [
+    "pendulum",
+    "2.0.4"
+  ],
+  [
+    "pendulum",
+    "2.0.5"
+  ],
+  [
+    "pendulum",
+    "2.1.0"
+  ],
+  [
+    "pendulum",
+    "2.1.1"
+  ],
+  [
+    "pendulum",
+    "2.1.2"
+  ],
+  [
+    "pendulum",
+    "3.0.0"
+  ],
+  [
+    "invenio-assets",
+    "1.0.0"
+  ],
+  [
+    "invenio-assets",
+    "1.1.0"
+  ],
+  [
+    "invenio-assets",
+    "1.1.1"
+  ],
+  [
+    "invenio-assets",
+    "1.1.2"
+  ],
+  [
+    "invenio-assets",
+    "1.1.3"
+  ],
+  [
+    "invenio-assets",
+    "1.1.4"
+  ],
+  [
+    "invenio-assets",
+    "1.1.5"
+  ],
+  [
+    "invenio-assets",
+    "1.1.6"
+  ],
+  [
+    "invenio-assets",
+    "1.2.0"
+  ],
+  [
+    "invenio-assets",
+    "1.2.1"
+  ],
+  [
+    "invenio-assets",
+    "1.2.10"
+  ],
+  [
+    "invenio-assets",
+    "1.2.2"
+  ],
+  [
+    "invenio-assets",
+    "1.2.3"
+  ],
+  [
+    "invenio-assets",
+    "1.2.4"
+  ],
+  [
+    "invenio-assets",
+    "1.2.5"
+  ],
+  [
+    "invenio-assets",
+    "1.2.6"
+  ],
+  [
+    "invenio-assets",
+    "1.2.7"
+  ],
+  [
+    "invenio-assets",
+    "1.2.8"
+  ],
+  [
+    "invenio-assets",
+    "1.2.9"
+  ],
+  [
+    "invenio-assets",
+    "1.3.0"
+  ],
+  [
+    "invenio-assets",
+    "1.3.1"
+  ],
+  [
+    "invenio-assets",
+    "1.3.2"
+  ],
+  [
+    "invenio-assets",
+    "1.3.3"
+  ],
+  [
+    "invenio-assets",
+    "2.0.0"
+  ],
+  [
+    "invenio-assets",
+    "2.0.1"
+  ],
+  [
+    "invenio-assets",
+    "3.0.0"
+  ],
+  [
+    "invenio-assets",
+    "3.0.1"
+  ],
+  [
+    "invenio-assets",
+    "3.0.2"
+  ],
+  [
+    "invenio-assets",
+    "3.0.3"
+  ],
+  [
+    "pywebpack",
+    "0.1.0"
+  ],
+  [
+    "pywebpack",
+    "0.1.1"
+  ],
+  [
+    "pywebpack",
+    "0.1.2"
+  ],
+  [
+    "pywebpack",
+    "1.0.0"
+  ],
+  [
+    "pywebpack",
+    "1.0.1"
+  ],
+  [
+    "pywebpack",
+    "1.0.2"
+  ],
+  [
+    "pywebpack",
+    "1.0.3"
+  ],
+  [
+    "pywebpack",
+    "1.0.4"
+  ],
+  [
+    "pywebpack",
+    "1.1.0"
+  ],
+  [
+    "pywebpack",
+    "1.2.0"
+  ],
+  [
+    "pywebpack",
+    "2.0.0"
+  ],
+  [
+    "textblob",
+    "0.1"
+  ],
+  [
+    "textblob",
+    "0.1.2"
+  ],
+  [
+    "textblob",
+    "0.1.3"
+  ],
+  [
+    "textblob",
+    "0.1.31"
+  ],
+  [
+    "textblob",
+    "0.1.32"
+  ],
+  [
+    "textblob",
+    "0.1.33"
+  ],
+  [
+    "textblob",
+    "0.1.34"
+  ],
+  [
+    "textblob",
+    "0.1.35"
+  ],
+  [
+    "textblob",
+    "0.1.36"
+  ],
+  [
+    "textblob",
+    "0.10.0"
+  ],
+  [
+    "textblob",
+    "0.11.0"
+  ],
+  [
+    "textblob",
+    "0.11.1"
+  ],
+  [
+    "textblob",
+    "0.12.0"
+  ],
+  [
+    "textblob",
+    "0.13.0"
+  ],
+  [
+    "textblob",
+    "0.13.1"
+  ],
+  [
+    "textblob",
+    "0.14.0"
+  ],
+  [
+    "textblob",
+    "0.15.0"
+  ],
+  [
+    "textblob",
+    "0.15.1"
+  ],
+  [
+    "textblob",
+    "0.15.2"
+  ],
+  [
+    "textblob",
+    "0.15.3"
+  ],
+  [
+    "textblob",
+    "0.17.0"
+  ],
+  [
+    "textblob",
+    "0.17.1"
+  ],
+  [
+    "textblob",
+    "0.18.0"
+  ],
+  [
+    "textblob",
+    "0.18.0.post0"
+  ],
+  [
+    "textblob",
+    "0.2.0"
+  ],
+  [
+    "textblob",
+    "0.2.1"
+  ],
+  [
+    "textblob",
+    "0.2.3"
+  ],
+  [
+    "textblob",
+    "0.2.4"
+  ],
+  [
+    "textblob",
+    "0.2.5"
+  ],
+  [
+    "textblob",
+    "0.2.6"
+  ],
+  [
+    "textblob",
+    "0.3.0"
+  ],
+  [
+    "textblob",
+    "0.3.1"
+  ],
+  [
+    "textblob",
+    "0.3.10"
+  ],
+  [
+    "textblob",
+    "0.3.2"
+  ],
+  [
+    "textblob",
+    "0.3.3"
+  ],
+  [
+    "textblob",
+    "0.3.4"
+  ],
+  [
+    "textblob",
+    "0.3.5"
+  ],
+  [
+    "textblob",
+    "0.3.6"
+  ],
+  [
+    "textblob",
+    "0.3.7"
+  ],
+  [
+    "textblob",
+    "0.3.8"
+  ],
+  [
+    "textblob",
+    "0.3.9"
+  ],
+  [
+    "textblob",
+    "0.4.0"
+  ],
+  [
+    "textblob",
+    "0.5.0"
+  ],
+  [
+    "textblob",
+    "0.5.1"
+  ],
+  [
+    "textblob",
+    "0.5.2"
+  ],
+  [
+    "textblob",
+    "0.5.3"
+  ],
+  [
+    "textblob",
+    "0.6.0"
+  ],
+  [
+    "textblob",
+    "0.6.1"
+  ],
+  [
+    "textblob",
+    "0.6.2"
+  ],
+  [
+    "textblob",
+    "0.6.3"
+  ],
+  [
+    "textblob",
+    "0.7.0"
+  ],
+  [
+    "textblob",
+    "0.7.1"
+  ],
+  [
+    "textblob",
+    "0.8.0"
+  ],
+  [
+    "textblob",
+    "0.8.1"
+  ],
+  [
+    "textblob",
+    "0.8.2"
+  ],
+  [
+    "textblob",
+    "0.8.3"
+  ],
+  [
+    "textblob",
+    "0.8.4"
+  ],
+  [
+    "textblob",
+    "0.9.0"
+  ],
+  [
+    "textblob",
+    "0.9.1"
+  ],
+  [
+    "invenio-base",
+    "0.1.0"
+  ],
+  [
+    "invenio-base",
+    "0.2.0"
+  ],
+  [
+    "invenio-base",
+    "0.2.1"
+  ],
+  [
+    "invenio-base",
+    "0.3.0"
+  ],
+  [
+    "invenio-base",
+    "0.3.1"
+  ],
+  [
+    "invenio-base",
+    "1.0.0"
+  ],
+  [
+    "invenio-base",
+    "1.0.1"
+  ],
+  [
+    "invenio-base",
+    "1.0.2"
+  ],
+  [
+    "invenio-base",
+    "1.1.0"
+  ],
+  [
+    "invenio-base",
+    "1.2.0"
+  ],
+  [
+    "invenio-base",
+    "1.2.1"
+  ],
+  [
+    "invenio-base",
+    "1.2.10"
+  ],
+  [
+    "invenio-base",
+    "1.2.11"
+  ],
+  [
+    "invenio-base",
+    "1.2.12"
+  ],
+  [
+    "invenio-base",
+    "1.2.13"
+  ],
+  [
+    "invenio-base",
+    "1.2.14"
+  ],
+  [
+    "invenio-base",
+    "1.2.15"
+  ],
+  [
+    "invenio-base",
+    "1.2.16"
+  ],
+  [
+    "invenio-base",
+    "1.2.17"
+  ],
+  [
+    "invenio-base",
+    "1.2.2"
+  ],
+  [
+    "invenio-base",
+    "1.2.3"
+  ],
+  [
+    "invenio-base",
+    "1.2.4"
+  ],
+  [
+    "invenio-base",
+    "1.2.5"
+  ],
+  [
+    "invenio-base",
+    "1.2.8"
+  ],
+  [
+    "invenio-base",
+    "1.2.9"
+  ],
+  [
+    "invenio-base",
+    "1.3.0"
+  ],
+  [
+    "invenio-base",
+    "1.4.0"
+  ],
+  [
+    "aiomqtt",
+    "0.1.0"
+  ],
+  [
+    "aiomqtt",
+    "0.1.1"
+  ],
+  [
+    "aiomqtt",
+    "0.1.2"
+  ],
+  [
+    "aiomqtt",
+    "0.1.3"
+  ],
+  [
+    "aiomqtt",
+    "1.0.0"
+  ],
+  [
+    "aiomqtt",
+    "1.1.0"
+  ],
+  [
+    "aiomqtt",
+    "1.2.0"
+  ],
+  [
+    "aiomqtt",
+    "1.2.1"
+  ],
+  [
+    "aiomqtt",
+    "2.0.0"
+  ],
+  [
+    "aiomqtt",
+    "2.0.1"
+  ],
+  [
+    "aiomqtt",
+    "2.1.0"
+  ],
+  [
+    "aiomqtt",
+    "2.2.0"
+  ],
+  [
+    "tokenizers",
+    "0.0.10"
+  ],
+  [
+    "tokenizers",
+    "0.0.11"
+  ],
+  [
+    "tokenizers",
+    "0.0.12"
+  ],
+  [
+    "tokenizers",
+    "0.0.13"
+  ],
+  [
+    "tokenizers",
+    "0.0.2"
+  ],
+  [
+    "tokenizers",
+    "0.0.3"
+  ],
+  [
+    "tokenizers",
+    "0.0.4"
+  ],
+  [
+    "tokenizers",
+    "0.0.5"
+  ],
+  [
+    "tokenizers",
+    "0.0.6"
+  ],
+  [
+    "tokenizers",
+    "0.0.7"
+  ],
+  [
+    "tokenizers",
+    "0.0.8"
+  ],
+  [
+    "tokenizers",
+    "0.0.9"
+  ],
+  [
+    "tokenizers",
+    "0.1.0"
+  ],
+  [
+    "tokenizers",
+    "0.1.1"
+  ],
+  [
+    "tokenizers",
+    "0.10.0"
+  ],
+  [
+    "tokenizers",
+    "0.10.1"
+  ],
+  [
+    "tokenizers",
+    "0.10.2"
+  ],
+  [
+    "tokenizers",
+    "0.10.3"
+  ],
+  [
+    "tokenizers",
+    "0.11.0"
+  ],
+  [
+    "tokenizers",
+    "0.11.1"
+  ],
+  [
+    "tokenizers",
+    "0.11.2"
+  ],
+  [
+    "tokenizers",
+    "0.11.3"
+  ],
+  [
+    "tokenizers",
+    "0.11.4"
+  ],
+  [
+    "tokenizers",
+    "0.11.5"
+  ],
+  [
+    "tokenizers",
+    "0.11.6"
+  ],
+  [
+    "tokenizers",
+    "0.12.1"
+  ],
+  [
+    "tokenizers",
+    "0.13.0"
+  ],
+  [
+    "tokenizers",
+    "0.13.1"
+  ],
+  [
+    "tokenizers",
+    "0.13.2"
+  ],
+  [
+    "tokenizers",
+    "0.13.3"
+  ],
+  [
+    "tokenizers",
+    "0.14.0"
+  ],
+  [
+    "tokenizers",
+    "0.14.1"
+  ],
+  [
+    "tokenizers",
+    "0.15.0"
+  ],
+  [
+    "tokenizers",
+    "0.15.1"
+  ],
+  [
+    "tokenizers",
+    "0.15.2"
+  ],
+  [
+    "tokenizers",
+    "0.19.0"
+  ],
+  [
+    "tokenizers",
+    "0.19.1"
+  ],
+  [
+    "tokenizers",
+    "0.2.0"
+  ],
+  [
+    "tokenizers",
+    "0.2.1"
+  ],
+  [
+    "tokenizers",
+    "0.3.0"
+  ],
+  [
+    "tokenizers",
+    "0.4.0"
+  ],
+  [
+    "tokenizers",
+    "0.4.1"
+  ],
+  [
+    "tokenizers",
+    "0.4.2"
+  ],
+  [
+    "tokenizers",
+    "0.5.0"
+  ],
+  [
+    "tokenizers",
+    "0.5.1"
+  ],
+  [
+    "tokenizers",
+    "0.5.2"
+  ],
+  [
+    "tokenizers",
+    "0.6.0"
+  ],
+  [
+    "tokenizers",
+    "0.7.0"
+  ],
+  [
+    "tokenizers",
+    "0.8.0"
+  ],
+  [
+    "tokenizers",
+    "0.8.1"
+  ],
+  [
+    "tokenizers",
+    "0.9.0"
+  ],
+  [
+    "tokenizers",
+    "0.9.1"
+  ],
+  [
+    "tokenizers",
+    "0.9.2"
+  ],
+  [
+    "tokenizers",
+    "0.9.3"
+  ],
+  [
+    "tokenizers",
+    "0.9.4"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.1"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.10"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.11"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.12"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.13"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.14"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.15"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.2"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.3"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.4"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.5"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.6"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.7"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.8"
+  ],
+  [
+    "tpdcc-libs-python",
+    "0.0.9"
+  ],
+  [
+    "invenio-mail",
+    "1.0.0"
+  ],
+  [
+    "invenio-mail",
+    "1.0.1"
+  ],
+  [
+    "invenio-mail",
+    "1.0.2"
+  ],
+  [
+    "invenio-mail",
+    "1.0.4"
+  ],
+  [
+    "invenio-mail",
+    "2.0.0"
+  ],
+  [
+    "invenio-mail",
+    "2.1.0"
+  ],
+  [
+    "invenio-mail",
+    "2.1.1"
+  ],
+  [
+    "safetensors",
+    "0.0.1"
+  ],
+  [
+    "safetensors",
+    "0.2.0"
+  ],
+  [
+    "safetensors",
+    "0.2.1"
+  ],
+  [
+    "safetensors",
+    "0.2.2"
+  ],
+  [
+    "safetensors",
+    "0.2.3"
+  ],
+  [
+    "safetensors",
+    "0.2.4"
+  ],
+  [
+    "safetensors",
+    "0.2.5"
+  ],
+  [
+    "safetensors",
+    "0.2.6"
+  ],
+  [
+    "safetensors",
+    "0.2.7"
+  ],
+  [
+    "safetensors",
+    "0.2.8"
+  ],
+  [
+    "safetensors",
+    "0.3.0"
+  ],
+  [
+    "safetensors",
+    "0.3.1"
+  ],
+  [
+    "safetensors",
+    "0.3.2"
+  ],
+  [
+    "safetensors",
+    "0.3.3"
+  ],
+  [
+    "safetensors",
+    "0.4.0"
+  ],
+  [
+    "safetensors",
+    "0.4.1"
+  ],
+  [
+    "safetensors",
+    "0.4.2"
+  ],
+  [
+    "safetensors",
+    "0.4.3"
+  ],
+  [
+    "flask-alembic",
+    "1.0.0"
+  ],
+  [
+    "flask-alembic",
+    "1.0.1"
+  ],
+  [
+    "flask-alembic",
+    "1.0.2"
+  ],
+  [
+    "flask-alembic",
+    "1.1"
+  ],
+  [
+    "flask-alembic",
+    "1.1.1"
+  ],
+  [
+    "flask-alembic",
+    "1.2"
+  ],
+  [
+    "flask-alembic",
+    "1.2.1"
+  ],
+  [
+    "flask-alembic",
+    "2.0.0"
+  ],
+  [
+    "flask-alembic",
+    "2.0.1"
+  ],
+  [
+    "flask-alembic",
+    "3.0.0"
+  ],
+  [
+    "flask-alembic",
+    "3.0.1"
+  ],
+  [
+    "flask-alembic",
+    "3.1.0"
+  ],
+  [
+    "rispy",
+    "0.5.0"
+  ],
+  [
+    "rispy",
+    "0.5.1"
+  ],
+  [
+    "rispy",
+    "0.6.0"
+  ],
+  [
+    "rispy",
+    "0.7.1"
+  ],
+  [
+    "rispy",
+    "0.8.0"
+  ],
+  [
+    "rispy",
+    "0.8.1"
+  ],
+  [
+    "rispy",
+    "0.9.0"
+  ],
+  [
+    "asyncer",
+    "0.0.1"
+  ],
+  [
+    "asyncer",
+    "0.0.2"
+  ],
+  [
+    "asyncer",
+    "0.0.3"
+  ],
+  [
+    "asyncer",
+    "0.0.4"
+  ],
+  [
+    "asyncer",
+    "0.0.5"
+  ],
+  [
+    "asyncer",
+    "0.0.6"
+  ],
+  [
+    "asyncer",
+    "0.0.7"
+  ],
+  [
+    "scikit-learn",
+    "0.24.2"
+  ],
+  [
+    "cirrocumulus",
+    "1.1.57"
   ]
 ]

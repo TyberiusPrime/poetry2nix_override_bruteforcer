@@ -56,7 +56,7 @@
       # Shell for app dependencies.
       devShells.default = pkgs.mkShell {
         #inputsFrom = [self.packages.${system}.myapp];
-        buildInputs = [self.packages.${system}.myapp pkgs.poetry];
+        buildInputs = [self.packages.${system}.myapp pkgs.poetry pkgs.nixfmt-rfc-style];
       };
 
       # Shell for poetry.
