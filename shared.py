@@ -1,7 +1,10 @@
 from pathlib import Path
+import collections
 import re
 import json
 import toml
+
+file_path = Path(__file__).parent
 
 entries = [
     # ("uuid7", "0.1.0", ""),
@@ -20,6 +23,23 @@ entries.extend(json.loads(Path("input.json").read_text())[:])
 entries = [(k, v) for (k, v) in entries if k != "python-axolotl-curve25519"]
 entries.append(("python-axolotl-curve25519", "0.4.1post2"))
 
+def is_prerelease(version): # todo: refactor with assemble_list.py
+    # pep440
+    return any(x in version.split(".")[-1] for x in ("a", "b", "rc", "dev", "post"))
+
+# these are packages we noted to have shitfting build-systems / overrides
+# so we do them all to determine the cutover points.
+for fn in Path('autodetected/needs_sweep').glob("*"):
+    if fn.read_text().strip() == 'yes':
+        info = shared.get_info(fn.name)
+        for k, v in info["releases"].items():
+            v = [x for x in v if not "whl" in x["url"]]  # I want only source releases
+            if not v:
+                continue
+            if (not v[0].get("yanked")) and (("." in k) or k.isnumeric()):
+                if not is_prerelease(k):
+                    print(fn.name, k)
+                    entries.append((fn.name, k))
 
 def normalise_package_name(name):
     parts = re.split("[_.-]+", name.lower())
@@ -115,3 +135,68 @@ assert (
     )
     == "sphinx"
 )
+
+
+def examine_results():
+    op = Path("output")
+    count = collections.Counter()
+    classified = {}
+
+    for pkg, version in entries:
+        output_path = op / pkg / version
+        what = "???"
+        if not output_path.exists():
+            if pkg in known_failing or (pkg + "-" + version) in known_failing:
+                if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                    what = "fail:expected-autodetected"
+                else:
+                    what = "fail:expected-manual"
+
+            else:
+                what = "missing:not-done?"
+                print(what, pkg)
+        else:
+            if (output_path / "result").exists():
+                needed_patch = (output_path / "round2.stderr").exists()
+                if needed_patch:
+                    what = "success:needed_patch"
+                else:
+                    what = "success:upstream"
+            else:
+                if (output_path / "round1.stderr").exists():
+                    if pkg in known_failing or (pkg + "-" + version) in known_failing:
+                        if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                            what = "fail:expected-autodetected"
+                        else:
+                            what = "fail:expected-manual"
+                    else:
+                        what = "fail:unexpected"
+                else:
+                    if pkg in known_failing or (pkg + "-" + version) in known_failing:
+                        if pkg in autodetected or (pkg + "-" + version) in autodetected:
+                            what = "fail:expected-autodetected"
+                        else:
+                            what = "fail:expected-manual"
+                    else:
+                        what = "missing:not-done"
+        count[what] += 1
+        classified[(pkg, version)] = what
+    return count, classified
+
+
+def is_prerelease(version):
+    # pep440
+    return any(x in version.split(".")[-1] for x in ("a", "b", "rc", "dev", "post"))
+
+def get_info(pkg):
+    url = f"https://pypi.org/pypi/{pkg}/json"
+    if not (file_path / f"pypi_info/{pkg}.json").exists():
+        try:
+            urllib.request.urlretrieve(url, f"pypi_info/{pkg}.json")
+        except Exception as e:
+            print("could not find / http issue", pkg, e)
+            raise KeyError(pkg)
+    return json.loads(Path(f"pypi_info/{pkg}.json").read_text())
+
+
+

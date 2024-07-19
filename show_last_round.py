@@ -65,5 +65,5 @@ if failed_builders:
         target = os.path.expanduser(f"~/shu/sha/{chosen_name}")
         os.makedirs(target, exist_ok=True)
         subprocess.run(["tar", "xf", source], cwd=target)
-        #subprocess.Popen(["kitty", "-d", target])
-    #subprocess.Popen(["kitty", "-d", "output/" + pkg + "/" + ver])
+        subprocess.Popen(["kitty", "-d", target])
+    subprocess.Popen(["kitty", "-d", "output/" + pkg + "/" + ver])

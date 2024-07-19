@@ -53,6 +53,10 @@
   "neurokit": "Wants sklearn, but that's called scikit-learn these days.Patchable?",
   "xpybutil": "needs xpyb, not in nixpkgs",
   "batman-package": "c-error?",
+  "invocations": "somehow pulls in setuptools-rust from the (poetry) pkgs, not from pkgs",
+  "dm-tree": "abseil incompatibility?",
+  "thrift-0.9.2": "imports cStringIO.h - not python3 compatible?",
+  "mypi-0.991": "python3.12 incompatible (setuptools/distutils split)",
   "dorianutils": "requires cryptography=2.8, which requires openssl-1.1.1w which is insecure"
 }
 

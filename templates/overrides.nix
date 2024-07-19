@@ -111,6 +111,24 @@
       # furtherargs without nativeBuildInputs
       // lib.attrsets.filterAttrs (name: value: name != "nativeBuildInputs") furtherArgs
     );
+  offlineMaturinHook = pkgs.callPackage ({pkgsHostTarget}:
+    pkgs.makeSetupHook {
+      name = "offline-maturin-build-hook.sh";
+      propagatedBuildInputs = [
+        pkgsHostTarget.maturin
+        pkgsHostTarget.cargo
+        pkgsHostTarget.rustc
+      ];
+      substitutions = {
+        inherit (pkgs.rust.envVars) rustTargetPlatformSpec setEnv;
+      };
+    }
+    ./offline-maturin-build-hook.sh) {};
+  offlineMaturin = args:
+    standardMaturin (args
+      // {
+        maturinHook = offlineMaturinHook;
+      });
 in [
   defaultPoetryOverrides
 
