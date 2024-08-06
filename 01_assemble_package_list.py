@@ -88,6 +88,58 @@ with_versions = add_latest(list_without_versions)
 
 # these are packages we noted to have shitfting build-systems / overrides
 # so we do them all to determine the cutover points.
+
+sweep_excluded = {
+    ("jsonschema", "0.2"),
+    ("jsonschema", "2.5.0"),
+    ("lxml", "1.3.2"),  # py2.7 only
+    ("lxml", "1.3.3"),  # py2.7 only
+    ("lxml", "1.3.4"),  # py2.7 only
+    ("lxml", "1.3.5"),  # py2.7 only
+    ("lxml", "1.3.6"),  # py2.7 only
+    ("lxml", "2.0"),  # py2.7 only
+    ("lxml", "2.0.10"),  # py2.7 only
+    ("lxml", "2.0.11"),  # py2.7 only
+    ("lxml", "2.0.4"),  # py2.7 only
+    ("lxml", "2.0.5"),  # py2.7 only
+    ("lxml", "2.0.6"),  # py2.7 only
+    ("lxml", "2.0.7"),  # py2.7 only
+    ("lxml", "2.0.8"),  # py2.7 only
+    ("lxml", "2.0.9"),  # py2.7 only
+    ("lxml", "2.1"),  # py2.7 only
+    ("lxml", "2.1.1"),  # py2.7 only
+    ("lxml", "2.1.2"),  # py2.7 only
+    ("lxml", "2.1.3"),  # py2.7 only
+    ("lxml", "2.1.4"),  # py2.7 only
+    ("lxml", "2.1.5"),  # py2.7 only
+    ("lxml", "2.2"),  # py2.7 only
+    ("lxml", "2.2.1"),  # py2.7 only
+    ("lxml", "2.2.2"),  # py2.7 only
+    ("lxml", "2.2.3"),  # py2.7 only
+    ("lxml", "2.2.4"),  # py2.7 only
+    ("lxml", "2.2.5"),  # py2.7 only
+    ("lxml", "2.2.6"),  # py2.7 only
+    ("lxml", "2.2.7"),  # py2.7 only
+    ("lxml", "2.2.8"),  # py2.7 only
+    ("lxml", "2.3"),  # py2.7 only
+    ("lxml", "2.3.1"),  # py2.7 only
+    ("lxml", "2.3.2"),  # py2.7 only
+    ("lxml", "2.3.3"),  # py2.7 only
+    ("lxml", "2.3.4"),  # py2.7 only
+    ("lxml", "2.3.5"),  # py2.7 only
+    ("lxml", "2.3.6"),  # py2.7 only
+    ("lxml", "3.0"),  # py2.7 only
+    ("lxml", "3.0.2"),  # py2.7 only
+    ("lxml", "3.1.0"),  # py2.7 only
+    ("lxml", "3.1.1"),  # py2.7 only
+    ("lxml", "3.1.2"),  # py2.7 only
+    ("lxml", "3.2.0"),  # py2.7 only
+    ("lxml", "3.2.1"),  # py2.7 only
+    ("lxml", "3.2.2"),  # py2.7 only
+    ("lxml", "3.2.3"),  # py2.7 only
+    ("lxml", "3.2.4"),  # py2.7 only
+    ("lxml", "3.2.5"),  # py2.7 only
+}
 for fn in Path("autodetected/needs_sweep").glob("*"):
     if fn.read_text().strip() != "no":
         info = get_info(fn.name)
@@ -97,12 +149,13 @@ for fn in Path("autodetected/needs_sweep").glob("*"):
                 continue
             if (not v[0].get("yanked")) and (("." in k) or k.isnumeric()):
                 if not is_prerelease(k):
-                    with_versions.append((fn.name, k))
+                    if not (fn.name, k) in sweep_excluded:
+                        with_versions.append((fn.name, k))
 
 with_versions.extend(
     [
         ("scikit-learn", "0.24.2"),
-        #("h5py", "2.10.0"),
+        # ("h5py", "2.10.0"),
         ("cirrocumulus", "1.1.57"),
     ]
 )

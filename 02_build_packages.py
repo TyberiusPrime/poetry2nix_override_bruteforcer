@@ -295,11 +295,14 @@ def guess_overrides(
                 '';}
             """,
         "use_2to3 is invalid.": """{ postPatch = ''
+            #only if setup.py is present
+            if [ -e setup.py ]; then
               substituteInPlace setup.py \
                 --replace-quiet "use_2to3=True," "" \
                 --replace-quiet "use_2to3=True" "" \
                 --replace-quiet "use_2to3 = True," "" \
-                --replace-quiet "use_2to3= bool(python_version >= 3.0)," "" \
+                --replace-quiet "use_2to3= bool(python_version >= 3.0)," "" 
+            fi
             '';
         }""",
         "error: command 'swig' failed: No such file or directory": """{
@@ -354,7 +357,10 @@ def guess_overrides(
                 buildInputs = (old.builtInputs or []) ++ [prev.babel];
         }
         """,
-        ("from distutils.util import byte_compile", 'writing byte-compilation script'):  #  a perfectly horrible hack from https://github.com/NixOS/nixpkgs/pull/326321
+        (
+            "from distutils.util import byte_compile",
+            "writing byte-compilation script",
+        ):  #  a perfectly horrible hack from https://github.com/NixOS/nixpkgs/pull/326321
         """
         {
         nativeBuildInputs =
@@ -499,9 +505,12 @@ def guess_overrides(
         ]
         shutil.copy(
             "templates/offline-maturin-build-hook.sh",
-            top_path / outer_pkg / outer_version/ "offline-maturin-build-hook.sh",
+            top_path / outer_pkg / outer_version / "offline-maturin-build-hook.sh",
         )
-        subprocess.check_call(["git","add", "offline-maturin-build-hook.sh"], cwd = top_path / outer_pkg / outer_version)
+        subprocess.check_call(
+            ["git", "add", "offline-maturin-build-hook.sh"],
+            cwd=top_path / outer_pkg / outer_version,
+        )
 
 
 def downgrade_gast(pkg, version):
@@ -655,8 +664,12 @@ def try_to_build(pkg, version):
 
     def inner(output_files):
         if Path(cwd / "result").exists():
-            output_files["sentinel"].write_text("skipped")
-            return
+            rebuild_file = Path(cwd / "do_rebuild")
+            if not rebuild_file.exists():
+                output_files["sentinel"].write_text("skipped")
+                return
+            else:
+                rebuild_file.unlink()
         for k, v in non_templates.items():
             (cwd / k).write_text(v)
 
@@ -789,6 +802,14 @@ def add_overrides_for_known_packages(pkg, version, overrides):
         if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
             print("bingo", pkg)
             overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
+        if (Path("patches") / pkg).exists():
+            (top_path / pkg / version / "patches").mkdir(exist_ok=True, parents=True)
+            shutil.copytree(
+                Path("patches") / pkg,
+                (top_path / pkg / version / "patches" / pkg),
+                dirs_exist_ok=True,
+            )
+            subprocess.check_call(['git','add','patches'], cwd=(top_path / pkg / version ))
 
 
 def add_build_systems_for_known_packages(pkg, version, build_systems):
@@ -805,6 +826,9 @@ def add_build_systems_for_known_packages(pkg, version, build_systems):
             )
 
             build_systems[pkg] = sorted(set(build_systems[pkg]))
+        scm_file = Path(f"autodetected/needs_scm/{pkg}.json")
+        if scm_file.exists():
+            build_systems[pkg].append(json.loads(scm_file.read_text()))
 
 
 if len(sys.argv) > 2:
@@ -826,7 +850,7 @@ for pkg, ver in entries:
         continue
     if (
         limit is None
-        or (limit[1] is None and re.search(limit[0],pkg))
+        or (limit[1] is None and re.search(limit[0], pkg))
         or (limit[1] == ver and limit[0] == pkg)
     ):
         constraints = add_constraints.get(pkg, "")

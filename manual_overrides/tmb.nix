@@ -1,0 +1,3 @@
+{
+  env.VERSION = old.version;
+}

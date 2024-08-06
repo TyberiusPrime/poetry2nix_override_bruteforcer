@@ -105,12 +105,16 @@ print("overrides", counts_overrides)
 
 if needs_sweep:
     raise ValueError(
-        'New needs sweep packages - rerun 01_assemble_package_list.py && 02_build_packages.py.py "'
+        'New needs sweep packages - rerun python 01_assemble_package_list.py && python 02_build_packages.py "'
         + "|".join(needs_sweep)
         + '"'
     )
 
 op = Path("poetry2nix-ready-files")
+if op.exists():
+    shutil.rmtree(op)
+shutil.copytree('patches',op)
+shutil.copytree('cargo.locks',op)
 op.mkdir(exist_ok=True, parents=True)
 build_systems_output_filename = op / "auto-build_systems.json"
 overrides_output_filename = op / "auto-overrides.nix"
