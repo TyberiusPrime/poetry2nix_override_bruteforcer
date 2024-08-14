@@ -18,6 +18,7 @@ build_systems = collections.defaultdict(set)
 build_systems_by_version = collections.defaultdict(dict)
 
 overrides = collections.defaultdict(set)
+override_sources = collections.defaultdict(set)
 
 
 def load_versions(pkg_path):
@@ -56,6 +57,7 @@ for (pkg, version), outcome in outcomes.items():
         ov = extract_overrides(ip / pkg / version / "overrides.nix")
         for k, v in ov.items():
             overrides[k].add(frozenset(v))
+            override_sources[k].add(f"{pkg}/{version}")
 
 import pprint
 
@@ -87,7 +89,7 @@ for pkg, info in overrides.items():
     if len(info) == 1:
         counts_overrides["one"] += 1
     else:
-        counts_overrides["different"] += 1
+        counts_overrides["different"] += 1 # that's multiple different override sets depending on verison
         if not (sweep_path / pkg).exists():
             (sweep_path / pkg).write_text("overrides")
             needs_sweep.append(pkg)
@@ -113,8 +115,8 @@ if needs_sweep:
 op = Path("poetry2nix-ready-files")
 if op.exists():
     shutil.rmtree(op)
-shutil.copytree('patches',op)
-shutil.copytree('cargo.locks',op)
+shutil.copytree("patches", op / "patches")
+shutil.copytree("cargo.locks", op / "cargo.locks")
 op.mkdir(exist_ok=True, parents=True)
 build_systems_output_filename = op / "auto-build_systems.json"
 overrides_output_filename = op / "auto-overrides.nix"
@@ -141,7 +143,7 @@ for pkg, info in sorted(build_systems.items()):
             runs.append((start, None, current))
             current = []
             start = k
-            print(k)
+            # print(k)
         this = []
         for start, stop, build_systems in runs:
             for bs in build_systems:
@@ -161,17 +163,27 @@ def format_overrides(ovs, pkg):
     oovs = []
     for ov in ovs:
         if not "override " in ov:
-            ov = (
-                ov.strip()[1:-1].replace(
-                    " {", " lib.optionalAttrs (!(old.src.isWheel or false)) {", 1
+            if "standardMaturin" in ov:
+                ov = ov.strip()[1:]  # remove {
+            else:
+                ov = (
+                    ov.strip()[1:-1].replace(
+                        " {", " lib.optionalAttrs (!(old.src.isWheel or false)) {", 1
+                    )
+                    + ";"
                 )
-                + ";"
-            )
         else:
-            ov = ov.strip()[1:] # remove }
+            ov = ov.strip()[1:]  # remove {
         oovs.append(ov)
     if len(oovs) > 1:
-        print("WARN", pkg)
+        # that's this version combines multiple overrides
+        print(
+            f"""WARN - {pkg} needs manual merging. 
+Craft manual_overrides/{pkg}.nix (you can use the comments in poetry2nix-ready-files/auto-overrides.nix), remove output/{pkg}, run python 02_build_packages.py {pkg}, rerun 05_assemble.py.
+if this keeps coming up, rebuild all packages that use {pkg}: {override_sources[pkg]}
+
+""",
+        )
         res = "\n".join(oovs)
         res = res.split("\n")
         res = "# Needs manual merging\n" + "\n".join(["#" + x for x in res])
@@ -215,8 +227,11 @@ for pkg, info in sorted(overrides.items()):
         #         this.append(d)
         # out[pkg] = this
 
-override_str = Path("templates/overrides.nix").read_text().replace("#here", 
-"""(final: prev: {"""  +"\n\n".join(out) + "})\n") 
+override_str = (
+    Path("templates/overrides.nix")
+    .read_text()
+    .replace("#here", """(final: prev: {""" + "\n\n".join(out) + "})\n")
+)
 
 overrides_output_filename.write_text(override_str)
 subprocess.check_call(["nixfmt", str(overrides_output_filename)])

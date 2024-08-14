@@ -74,17 +74,6 @@
 
   buildSystems = lib.importJSON ./build-systems.json;
 
-  extractCargoLock = src:
-    pkgs.runCommand "extract-cargolock-${src.name}-${src.version}" {} ''
-      mkdir $out
-      tar xf ${src}
-      CARGO_LOCK_PATH=`find . -name "Cargo.lock" | sort | head -n1`
-      if [ -z "$CARGO_LOCK_PATH" ]; then
-        echo "Cargo.lock not found in ${src}"
-        exit 1
-      fi
-      cp $CARGO_LOCK_PATH "$out"
-    '';
   standardMaturin = {
     outputHashes ? {},
     furtherArgs ? {},
@@ -101,11 +90,6 @@
             pkgs.rustPlatform.cargoSetupHook
             maturinHook
           ]
-          ++ (
-            if maturinHook == null
-            then []
-            else []
-          )
           ++ (furtherArgs.nativeBuildInputs or []);
       }
       # furtherargs without nativeBuildInputs

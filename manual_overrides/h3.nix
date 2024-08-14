@@ -6,4 +6,5 @@
         --replace "'{}/{}'.format(_dirname, libh3_path)" '"${pkgs.h3}/lib/libh3${sharedLibExt}"'
         fi
   '';
+  dontUseCmakeConfigure = true;
 }

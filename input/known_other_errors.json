@@ -69,5 +69,8 @@
   "h5py-2.10.0": " mismatch to h5 lib?",
 
   "dorianutils": "requires cryptography=2.8, which requires openssl-1.1.1w which is insecure",
-  "distro-info": "ubuntu & debian distribution info"
+  "distro-info": "ubuntu & debian distribution info",
+  "indra": "todo, slow",
+  "auto-ml": "todo, slow",
+  "poppy-creature": "todo, slow"
 }

@@ -234,7 +234,9 @@ def guess_overrides(
         # "No matching distribution found for setuptools-twine": "setuptools-twine", todo: setuptools-twien
         "No matching distribution found for setuptools-scm": "setuptools-scm",
         "No matching distribution found for setuptools_scm": "setuptools-scm",
+        "ModuleNotFoundError: No module named 'setuptools_scm'": "setuptools-scm",
         "No matching distribution found for pbr": "pbr",
+        # "ModuleNotFoundError: No module named 'pytoml'": "pytoml",
         "No matching distribution found for pytest": "pytest",
         "No matching distribution found for grpcio-tools": "grpcio-tools",
         "No matching distribution found for pytest-benchmark": "pytest-benchmark",
@@ -309,7 +311,6 @@ def guess_overrides(
             nativeBuildInputs = [ pkgs.swig ];
         }""",
         "mysql_config not found": """{nativeBuildInputs = [pkgs.libmysqlclient];}""",
-        "error: can't find Rust compiler": """{nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.rustc pkgs.cargo];}""",
         # this will probably need to be extendend / configured
         "AttributeError: module 'configparser' has no attribute 'SafeConfigParser'.": """{
             postPatch = ''
@@ -425,6 +426,19 @@ def guess_overrides(
         rust = "maturin"
     elif "ModuleNotFoundError: No module named 'setuptools_rust'" in full:
         rust = "setuptools_rust"
+
+    if "error: can't find Rust compiler" in full:
+        if not any("maturin" in x for x in overrides[pkg]):
+            overrides[pkg].append(
+                """{nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.rustc pkgs.cargo];}"""
+            )
+        else:
+            if any("maturinHook" in x for x in overrides[pkg]):
+                new = "((standardMaturin {maturinHook = null; furtherArgs = {nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.rustc pkgs.cargo];};}) old)"
+            else:
+                new = "((standardMaturin {furtherArgs = {nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.rustc pkgs.cargo];};}) old)"
+            overrides[pkg] = [x for x in overrides[pkg] if not "maturin" in x]
+            overrides[pkg].append(new)
 
     if rust:
         if not any("maturin" in x for x in overrides[pkg]):
@@ -644,7 +658,12 @@ def extract_output_hashes(cargo_lock):
     out = {}
     for pkg in t["package"]:
         if pkg.get("source", "").startswith("git+https"):
-            url, tag = pkg["source"].split("?tag=")
+            if "?tag=" in pkg["source"]:
+                url, tag = pkg["source"].split("?tag=")
+            elif re.search("#[a-z0-9]{40}$", pkg["source"]):
+                url, tag = pkg["source"].rsplit("#", 1)
+            else:
+                raise ValueError("can not parse", pkg["source"])
             if "#" in tag:
                 tag = tag[tag.index("#") + 1 :]
             hash = prefetch_git_hash(url, tag)
@@ -706,7 +725,9 @@ def try_to_build(pkg, version):
         try:
             if Path(f"manual_overrides/{pkg}.nix").exists() and overrides[pkg] == []:
                 overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
-            add_overrides_for_known_packages(pkg, version, overrides)
+            add_overrides_for_known_packages(
+                pkg, version, overrides
+            )  # rom the poetry lock file.
             add_build_systems_for_known_packages(pkg, version, build_systems)
 
             while True:
@@ -792,8 +813,10 @@ def try_to_build(pkg, version):
     return ppg.MultiFileGeneratingJob({"sentinel": cwd / "outcome"}, inner)
 
 
-def add_overrides_for_known_packages(pkg, version, overrides):
-    poetry_lock = toml.loads((top_path / pkg / version / "poetry.lock").read_text())
+def add_overrides_for_known_packages(outer_pkg, outer_version, overrides):
+    poetry_lock = toml.loads(
+        (top_path / outer_pkg / outer_version / "poetry.lock").read_text()
+    )
     for entry in poetry_lock["package"]:
         pkg = normalise_package_name(entry["name"])
         version = entry["version"]
@@ -803,13 +826,30 @@ def add_overrides_for_known_packages(pkg, version, overrides):
             print("bingo", pkg)
             overrides[pkg].append(Path(f"manual_overrides/{pkg}.nix").read_text())
         if (Path("patches") / pkg).exists():
-            (top_path / pkg / version / "patches").mkdir(exist_ok=True, parents=True)
+            (top_path / outer_pkg / outer_version / "patches").mkdir(
+                exist_ok=True, parents=True
+            )
             shutil.copytree(
                 Path("patches") / pkg,
-                (top_path / pkg / version / "patches" / pkg),
+                (top_path / outer_pkg / outer_version / "patches" / pkg),
                 dirs_exist_ok=True,
             )
-            subprocess.check_call(['git','add','patches'], cwd=(top_path / pkg / version ))
+            subprocess.check_call(
+                ["git", "add", "patches"], cwd=(top_path / outer_pkg / outer_version)
+            )
+        if (Path("cargo.locks") / pkg).exists():
+            (top_path / outer_pkg / outer_version / "cargo.locks").mkdir(
+                exist_ok=True, parents=True
+            )
+            shutil.copytree(
+                Path("cargo.locks") / pkg,
+                (top_path / outer_pkg / outer_version / "cargo.locks" / pkg),
+                dirs_exist_ok=True,
+            )
+            subprocess.check_call(
+                ["git", "add", "cargo.locks"],
+                cwd=(top_path / outer_pkg / outer_version),
+            )
 
 
 def add_build_systems_for_known_packages(pkg, version, build_systems):

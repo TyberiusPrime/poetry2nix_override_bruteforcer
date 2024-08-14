@@ -184,3 +184,4 @@
 "bob-measure" = """numba="<0.60"\n"""
 "networkit" = """numpy="<2"\n"""
 "pymatgen"= """numpy="<2"\n"""
+"rembg-2.0.57" = """numpy="2.0.0"\n""" # numba 0.60 does not compile with numpy 2.0.1 https://github.com/numba/numba/issues/9687

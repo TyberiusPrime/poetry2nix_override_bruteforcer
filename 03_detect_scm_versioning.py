@@ -140,7 +140,7 @@ if __name__ == "__main__":
                         "fd",
                         "-L",
                         "--",
-                        "-0\\.0\\.0",
+                        "-0[.]0[.]0",
                     ],
                     cwd="output",
                 )
@@ -164,7 +164,8 @@ if __name__ == "__main__":
                 affected_pkg = normalise_package_name(affected_pkg)
                 pkgs_to_rebuild.add(parts[0] + "/" + parts[1])
                 pkgs_to_examine[affected_pkg] = Path(h)
-        pkgs_to_rebuild = pkgs_to_rebuild - excluded
+        pkgs_to_rebuild = {
+                k for k in pkgs_to_rebuild if k.split("/",1)[0] not in excluded}
         pkgs_to_examine = {
             k: v for k, v in pkgs_to_examine.items() if k not in excluded
         }
@@ -173,16 +174,22 @@ if __name__ == "__main__":
         #print(pkgs_to_rebuild)
         #print(pkgs_to_examine)
 
-        for pkg in pkgs_to_rebuild:
-            p = Path(f"output/{pkg}/outcome")
+        for pkg_plus_ver in sorted(pkgs_to_rebuild):
+            pkg, _ = pkg_plus_ver.split("/")
+            if pkg == 'zmq':
+                print('zmq', 'zmq' in excluded, pkg in excluded)
+            if pkg in excluded:
+                continue
+            p = Path(f"output/{pkg_plus_ver}/outcome")
+            print('rebuild needed', p)
             if p.exists():
-                print(p)
                 p.unlink()
                 p.with_name(
                     "do_rebuild"
                 ).touch()  # we don't throw away the result, or we couln't run the examiner
 
         for pkg, path in pkgs_to_examine.items():
+            print('examining', pkg)
             if pkg in excluded:
                 continue
             output_file = Path("autodetected") / "needs_scm" / f"{pkg}.json"
