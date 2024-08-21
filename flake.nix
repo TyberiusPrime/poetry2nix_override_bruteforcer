@@ -11,6 +11,8 @@
     };
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -19,21 +21,28 @@
     flake-utils,
     poetry2nix,
     rust-overlay,
-  }:
+    treefmt-nix,
+    systems,
+  }: let
+    eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
+    treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./dev/treefmt.nix);
+  in
     flake-utils.lib.eachDefaultSystem (system: let
       overlays = [(import rust-overlay)];
       pkgs = import nixpkgs {inherit system overlays;};
       inherit (poetry2nix.lib.mkPoetry2Nix {inherit pkgs;}) mkPoetryEnv defaultPoetryOverrides;
     in {
+      formatter = treefmtEval.${system}.config.build.wrapper;
+
       packages = {
         myapp = mkPoetryEnv {
           projectDir = self;
           python = pkgs.python312;
-          overrides = defaultPoetryOverrides.extend (final: prev: {
+          overrides = defaultPoetryOverrides.extend (_final: prev: {
             polars = prev.polars.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
             pyzstd = prev.pyzstd.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
             #pypipegraph2 = prev.pypipegraph2.override {preferWheel = true;}; #.overridePythonAttrs (old: { preferWheel = true; });
-            pypipegraph2 = prev.pypipegraph2.overridePythonAttrs (old: {
+            pypipegraph2 = prev.pypipegraph2.overridePythonAttrs (_old: {
               cargoDeps = pkgs.rustPlatform.importCargoLock {
                 lockFile = "${prev.pypipegraph2.src}/Cargo.lock";
               };
@@ -56,7 +65,7 @@
       # Shell for app dependencies.
       devShells.default = pkgs.mkShell {
         #inputsFrom = [self.packages.${system}.myapp];
-        buildInputs = [self.packages.${system}.myapp pkgs.poetry pkgs.nixfmt-rfc-style pkgs.fd];
+        buildInputs = [self.packages.${system}.myapp pkgs.poetry pkgs.nixfmt-rfc-style pkgs.fd pkgs.cargo pkgs.rustc];
       };
 
       # Shell for poetry.

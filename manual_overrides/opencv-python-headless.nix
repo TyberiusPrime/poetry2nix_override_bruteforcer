@@ -1,4 +1,5 @@
 {
+  meta.priority = 1;
   postPatch = ''
     sed -i pyproject.toml -e 's/numpy==[0-9]\+\.[0-9]\+\.[0-9]\+;/numpy;/g'
     # somehow the type information doesn't get build

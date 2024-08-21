@@ -1,0 +1,2 @@
+python-version
+Because round2 depends on nornir (2.1.0) which requires Python >=3.6,<3.8, version solving failed.

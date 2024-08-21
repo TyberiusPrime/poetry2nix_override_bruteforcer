@@ -7,9 +7,11 @@ import shared
 
 fails = []
 
+known_failing = shared.get_known_failing()
+
 for dir in Path("output").glob("*"):
     if dir.is_dir():
-        if dir.name in shared.known_failing:
+        if dir.name in known_failing:
             continue
         for subdir in dir.glob("*"):
             if subdir.is_dir():
@@ -25,4 +27,4 @@ for dir in Path("output").glob("*"):
 f = random.choice(fails)
 print(f)
 
-subprocess.run(['python','show_last_round.py', f])
+subprocess.run(["python", "show_last_round.py", f])

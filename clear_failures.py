@@ -19,7 +19,6 @@ for outcome in Path("output").glob("**/outcome"):
             do = True
         if do:
             print(outcome)
-           # outcome.unlink()
+        # outcome.unlink()
     if not outcome.with_name("result").exists():
         print(outcome)
-

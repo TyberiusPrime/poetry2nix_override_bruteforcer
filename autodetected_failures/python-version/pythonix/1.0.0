@@ -1,0 +1,2 @@
+python-version
+Because round2 depends on pythonix (1.0.0) which requires Python <4.0,>=3.12, version solving failed.

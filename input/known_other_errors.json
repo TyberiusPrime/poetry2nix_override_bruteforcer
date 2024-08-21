@@ -72,5 +72,6 @@
   "distro-info": "ubuntu & debian distribution info",
   "indra": "todo, slow",
   "auto-ml": "todo, slow",
+  "arweave-python-client": "not actually a package distribution",
   "poppy-creature": "todo, slow"
 }

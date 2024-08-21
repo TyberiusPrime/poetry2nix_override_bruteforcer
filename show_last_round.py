@@ -62,7 +62,7 @@ if failed_builders:
     print(full_log)
     source = re.findall("unpacking source archive (.+)$", full_log, re.MULTILINE)[0]
     if source.endswith(".tar.gz"):
-        target = 'unpacked/' + chosen_name
+        target = "unpacked/" + chosen_name
         os.makedirs(target, exist_ok=True)
         subprocess.run(["tar", "xf", source], cwd=target)
         subprocess.Popen(["kitty", "-d", target])

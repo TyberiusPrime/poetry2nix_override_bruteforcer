@@ -1,0 +1,44 @@
+[
+  {
+    "buildSystem": "setuptools",
+    "until": "2.5.1"
+  },
+  {
+    "buildSystem": "setuptools",
+    "until": "3.0.0",
+    "from": "2.5.1"
+  },
+  {
+    "buildSystem": "vcversioner",
+    "until": "3.0.0",
+    "from": "2.5.1"
+  },
+  {
+    "buildSystem": "setuptools",
+    "until": "3.0.2",
+    "from": "3.0.0"
+  },
+  {
+    "buildSystem": "setuptools-scm",
+    "until": "4.6.0",
+    "from": "3.0.0"
+  },
+  {
+    "buildSystem": "setuptools",
+    "until": "4.6.0",
+    "from": "3.0.2"
+  },
+  {
+    "buildSystem": "hatchling",
+    "until": "4.11.0",
+    "from": "4.6.0"
+  },
+  {
+    "buildSystem": "hatch-fancy-pypi-readme",
+    "from": "4.11.0"
+  },
+  {
+    "buildSystem": "hatchling",
+    "from": "4.11.0"
+  }
+]

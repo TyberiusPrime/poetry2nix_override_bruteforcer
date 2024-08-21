@@ -1,4 +1,7 @@
 {
+  postPatch = lib.optionalString (old.version == "3.4.0") ''
+    touch requirements.txt
+  '';
   nativeBuildInputs = prev.rpy2.nativeBuildInputs or [] ++ [pkgs.R];
   builtInputs =
     (old.buildInputs

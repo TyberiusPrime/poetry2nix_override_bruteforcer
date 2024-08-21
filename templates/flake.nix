@@ -28,7 +28,7 @@
           overrides = import ./overrides.nix {
             inherit defaultPoetryOverrides;
             inherit pkgs;
-            lib = pkgs.lib;
+            inherit (pkgs) lib;
           }; 
           preferWheels = false;
         };

@@ -1,0 +1,2 @@
+python-version
+Because round2 depends on nilspodlib (3.5.0) which requires Python >=3.8,<=3.11, version solving failed.

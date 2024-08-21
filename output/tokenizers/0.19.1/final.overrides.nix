@@ -72,20 +72,8 @@
       );
 
   buildSystems = lib.importJSON ./build-systems.json;
-
-  extractCargoLock = src:
-    pkgs.runCommand "extract-cargolock-${src.name}-${src.version}" {} ''
-      mkdir $out
-      tar xf ${src}
-      CARGO_LOCK_PATH=`find . -name "Cargo.lock" | sort | head -n1`
-      if [ -z "$CARGO_LOCK_PATH" ]; then
-        echo "Cargo.lock not found in ${src}"
-        exit 1
-      fi
-      cp $CARGO_LOCK_PATH "$out"
-    '';
+  #Copy-into-auto-overrides
   standardMaturin = {
-    outputHashes ? {},
     furtherArgs ? {},
     maturinHook ? pkgs.rustPlatform.maturinBuildHook,
   }: old:
@@ -93,19 +81,37 @@
       {
         cargoDeps = pkgs.rustPlatform.importCargoLock {
           lockFile = ./. + "/cargo.locks/${old.pname}/${old.version}.lock";
-          inherit outputHashes;
         };
         nativeBuildInputs =
           (old.nativeBuildInputs or [])
           ++ [
             pkgs.rustPlatform.cargoSetupHook
             maturinHook
-          ] ++ (furtherArgs.nativeBuildInputs or []);
+          ]
+          ++ (furtherArgs.nativeBuildInputs or []);
       }
       # furtherargs without nativeBuildInputs
-      // lib.attrsets.filterAttrs (name: value: name != "nativeBuildInputs") furtherArgs
+      // lib.attrsets.filterAttrs (name: _value: name != "nativeBuildInputs") furtherArgs
     );
-
+  offlineMaturinHook = pkgs.callPackage ({pkgsHostTarget}:
+    pkgs.makeSetupHook {
+      name = "offline-maturin-build-hook.sh";
+      propagatedBuildInputs = [
+        pkgsHostTarget.maturin
+        pkgsHostTarget.cargo
+        pkgsHostTarget.rustc
+      ];
+      substitutions = {
+        inherit (pkgs.rust.envVars) rustTargetPlatformSpec setEnv;
+      };
+    }
+    ./offline-maturin-build-hook.sh) {};
+  offlineMaturin = args:
+    standardMaturin (args
+      // {
+        maturinHook = offlineMaturinHook;
+      });
+  #end-Copy-into-auto-overrides
 in [
   defaultPoetryOverrides
 
@@ -126,14 +132,15 @@ in [
   
             (final: prev: (
                 {
-                    "tokenizers"  = prev."tokenizers".overridePythonAttrs (old: 
-                standardMaturin {
-                      furtherArgs = {
-                        cargoRoot = "bindings/python";
-                      };
-                 }
-                old
-                );
+                    tokenizers  = prev.tokenizers.overridePythonAttrs (old: 
+                    (standardMaturin {
+                          furtherArgs = {
+                            cargoRoot = "bindings/python";
+                            
+                          };
+                     }
+                    old)
+                    );
                 }
             ))
 

@@ -3,7 +3,6 @@
   pkgs,
   lib,
 }: let
-  sharedLibExt = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
   addBuildSystem' = {
     final,
     drv,
@@ -73,9 +72,8 @@
       );
 
   buildSystems = lib.importJSON ./build-systems.json;
-
+  #Copy-into-auto-overrides
   standardMaturin = {
-    outputHashes ? {},
     furtherArgs ? {},
     maturinHook ? pkgs.rustPlatform.maturinBuildHook,
   }: old:
@@ -93,7 +91,7 @@
           ++ (furtherArgs.nativeBuildInputs or []);
       }
       # furtherargs without nativeBuildInputs
-      // lib.attrsets.filterAttrs (name: value: name != "nativeBuildInputs") furtherArgs
+      // lib.attrsets.filterAttrs (name: _value: name != "nativeBuildInputs") furtherArgs
     );
   offlineMaturinHook = pkgs.callPackage ({pkgsHostTarget}:
     pkgs.makeSetupHook {
@@ -113,6 +111,7 @@
       // {
         maturinHook = offlineMaturinHook;
       });
+  #end-Copy-into-auto-overrides
 in [
   defaultPoetryOverrides
 

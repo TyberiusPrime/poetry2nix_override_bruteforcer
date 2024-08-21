@@ -84,8 +84,8 @@ def detect_scm_tool(src_filename):
                 return "setuptools-git-versioning"
             if r.startswith("vcversioner"):
                 return "vcversioner"
-            if r.startswith('scmver'):
-                return 'scmver'
+            if r.startswith("scmver"):
+                return "scmver"
         if "tool.setuptools_scm" in raw:
             return "setuptools-scm"
         if not "build-system" in raw and "[tool.poetry]" in raw:
@@ -121,7 +121,7 @@ excluded = {
     "marshmallow-objects",  # needed a patch to have version information
     "pickley",  # needed a patch to have version information
     "influxdb3-python",  # needed a patch to have version information
-    "stringcoercion", # 0.0.0.35 version...
+    "stringcoercion",  # 0.0.0.35 version...
 }
 
 pkgs_to_rebuild = set()
@@ -165,23 +165,24 @@ if __name__ == "__main__":
                 pkgs_to_rebuild.add(parts[0] + "/" + parts[1])
                 pkgs_to_examine[affected_pkg] = Path(h)
         pkgs_to_rebuild = {
-                k for k in pkgs_to_rebuild if k.split("/",1)[0] not in excluded}
+            k for k in pkgs_to_rebuild if k.split("/", 1)[0] not in excluded
+        }
         pkgs_to_examine = {
             k: v for k, v in pkgs_to_examine.items() if k not in excluded
         }
         print("pkgs_to_rebuild", len(pkgs_to_rebuild))
         print("pkgs_to_examine", len(pkgs_to_examine))
-        #print(pkgs_to_rebuild)
-        #print(pkgs_to_examine)
+        # print(pkgs_to_rebuild)
+        # print(pkgs_to_examine)
 
         for pkg_plus_ver in sorted(pkgs_to_rebuild):
             pkg, _ = pkg_plus_ver.split("/")
-            if pkg == 'zmq':
-                print('zmq', 'zmq' in excluded, pkg in excluded)
+            if pkg == "zmq":
+                print("zmq", "zmq" in excluded, pkg in excluded)
             if pkg in excluded:
                 continue
             p = Path(f"output/{pkg_plus_ver}/outcome")
-            print('rebuild needed', p)
+            print("rebuild needed", p)
             if p.exists():
                 p.unlink()
                 p.with_name(
@@ -189,7 +190,7 @@ if __name__ == "__main__":
                 ).touch()  # we don't throw away the result, or we couln't run the examiner
 
         for pkg, path in pkgs_to_examine.items():
-            print('examining', pkg)
+            print("examining", pkg)
             if pkg in excluded:
                 continue
             output_file = Path("autodetected") / "needs_scm" / f"{pkg}.json"

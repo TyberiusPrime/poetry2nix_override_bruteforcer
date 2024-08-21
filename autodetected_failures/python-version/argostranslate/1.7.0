@@ -1,0 +1,2 @@
+python-version
+Because argostranslate (1.7.0) depends on ctranslate2 (2.17.0) which requires Python >=3.6,<3.11, argostranslate is forbidden.

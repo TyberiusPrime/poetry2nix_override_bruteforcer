@@ -3,6 +3,7 @@ import toml
 import json
 from pathlib import Path
 from shared import is_prerelease, get_info
+from packaging.version import Version
 
 read_dir = Path(__file__).parent / "input"
 pypi_dir = read_dir / "pypi_info"
@@ -139,9 +140,44 @@ sweep_excluded = {
     ("lxml", "3.2.3"),  # py2.7 only
     ("lxml", "3.2.4"),  # py2.7 only
     ("lxml", "3.2.5"),  # py2.7 only
+    ("docutils", "0.5"),  # py2.7 only Do not ask me about 0.4
+    ("cairocffi", "0.1"),  # pre 2015
+    ("cairocffi", "0.2"),  # pre 2015
+    ("cairocffi", "0.3"),  # pre 2015
+    ("cairocffi", "0.3.1"),  # pre 2015
+    ("cairocffi", "0.3.2"),  # pre 2015
+    ("cairocffi", "0.4"),  # pre 2015
+    ("cairocffi", "0.4.1"),  # pre 2015
+    ("cairocffi", "0.4.2"),  # pre 2015
+    ("cairocffi", "0.4.3"),  # pre 2015
+    ("cairocffi", "0.5"),  # pre 2015
+    ("cairocffi", "0.5.1"),  # pre 2015
+    ("cairocffi", "0.5.2"),  # pre 2015
+    ("cairocffi", "0.5.3"),  # pre 2015
+    ("cairocffi", "0.5.4"),  # pre 2015
+    ("cairocffi", "0.6"),  # pre 2015
+    ("cairocffi", "0.7"),  # pre 2015
+    ("cairocffi", "0.7.1"),  # pre 2015
+    ("tpdcc-libs-python", "0.0.1"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.2"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.3"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.4"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.5"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.6"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.7"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.8"),  # need  npm via dependency
+    ("tpdcc-libs-python", "0.0.9"),  # need  npm via dependency
+    ("python-calamine", "0.0.2"),  # no cargo lock
+    ("python-calamine", "0.0.3"),  # no cargo lock
+    ("python-calamine", "0.0.4"),  # no cargo lock
 }
 for fn in Path("autodetected/needs_sweep").glob("*"):
-    if fn.read_text().strip() != "no":
+    text = fn.read_text().strip() 
+    if text != "no":
+        if text.startswith('>'):
+            threshold = Version(text[1:])
+        else:
+            threshold = None
         info = get_info(fn.name)
         for k, v in info["releases"].items():
             v = [x for x in v if not "whl" in x["url"]]  # I want only source releases
@@ -150,7 +186,8 @@ for fn in Path("autodetected/needs_sweep").glob("*"):
             if (not v[0].get("yanked")) and (("." in k) or k.isnumeric()):
                 if not is_prerelease(k):
                     if not (fn.name, k) in sweep_excluded:
-                        with_versions.append((fn.name, k))
+                        if threshold is None or Version(k) >= threshold:
+                            with_versions.append((fn.name, k))
 
 with_versions.extend(
     [
@@ -177,3 +214,7 @@ version_constraints = {
     "pyqt6-qt6": "<6.7.0",
     "fastscript": ">=0.0.0.11",
 }
+
+for p in Path("cache").glob("remove_and_rebuild_"):
+    print("Remove remove_and_rebuild cache for", p)
+    p.unlink()

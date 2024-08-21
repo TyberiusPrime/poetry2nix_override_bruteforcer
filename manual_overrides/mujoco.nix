@@ -13,8 +13,8 @@
     # dependency directory. $build from setuptools.
     with pkgs;(
       let
-        pname = old.pname;
-        version = old.version;
+        inherit (old) pname;
+        inherit (old) version;
 
         # E.g. 3.11.2 -> "311"
         pythonVersionMajorMinor = with lib.versions; "${major python.pythonVersion}${minor python.pythonVersion}";

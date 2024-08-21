@@ -89,7 +89,7 @@ def normalise_package_name(name):
     try:
         parts = re.split("[_.-]+", name.lower())
     except:
-        print('name', repr(name))
+        print("name", repr(name))
         raise
     parts = [x for x in parts if x]
     return "-".join(parts)
@@ -200,3 +200,23 @@ def examine_results():
         count[what] += 1
         classified[(pkg, version)] = what
     return count, classified
+
+
+def nix_identifier(identifier):
+    if re.match("^[A-Za-z_][A-Za-z0-9-]*$", identifier):
+        return identifier
+    else:
+        return nix_format(identifier) # format as string
+
+def nix_format(value):
+    if isinstance(value, str):
+        return '"' + value.replace('"', '\\"') + '"'
+    elif isinstance(value, (int, float)):
+        return str(value)
+    else:
+        res = '{'
+        for k, v in value.items():
+            res += f'{nix_identifier(k)} = {nix_format(v)};'
+        res += '}'
+        return res
+

@@ -13,5 +13,6 @@
   "products-cmfdefault",
   "iptcinfo",
   "kivy",
+  "py3to2",
   "agora-client"
 ]

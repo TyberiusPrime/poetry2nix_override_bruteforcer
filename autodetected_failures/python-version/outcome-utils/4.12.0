@@ -1,0 +1,2 @@
+python-version
+Because round2 depends on outcome-utils (4.12.0) which requires Python ==3.8.5, version solving failed.
